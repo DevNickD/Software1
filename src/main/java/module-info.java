@@ -3,6 +3,8 @@ module kinkead.firstscreen {
     requires javafx.fxml;
 
 
-    opens kinkead.firstscreen to javafx.fxml;
-    exports kinkead.firstscreen;
+    opens model to javafx.fxml;
+    exports model;
+    exports controller;
+    opens controller to javafx.fxml;
 }

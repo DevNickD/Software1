@@ -1,4 +1,4 @@
-package kinkead.firstscreen;
+package model;
         /**
          * Supplied class Part.java
          */

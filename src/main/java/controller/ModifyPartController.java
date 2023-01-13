@@ -1,4 +1,4 @@
-package kinkead.firstscreen;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddProductController implements Initializable {
+public class ModifyPartController implements Initializable {
 
     public Label TheLabel;
     public int count = 1;
