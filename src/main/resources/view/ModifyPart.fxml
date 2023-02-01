@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyPartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyPartController">
    <children>
-      <Button layoutX="262.0" layoutY="188.0" mnemonicParsing="false" onAction="#OnButtonClicked" text="Click Me" />
-      <Label fx:id="TheLabel" layoutX="285.0" layoutY="139.0" text="?" />
+      <Button layoutX="363.0" layoutY="316.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="424.0" layoutY="316.0" mnemonicParsing="false" text="Cancel" />
+      <Label layoutX="88.0" layoutY="116.0" text="ID" />
+      <Label layoutX="86.0" layoutY="149.0" text="Name" />
+      <Label layoutX="86.0" layoutY="181.0" text="Inv" />
+      <Label layoutX="84.0" layoutY="214.0" prefHeight="17.0" prefWidth="61.0" text="Price/Cost" />
+      <Label layoutX="84.0" layoutY="245.0" text="Max" />
+      <Label layoutX="84.0" layoutY="276.0" text="Machine ID" />
+      <TextField disable="true" layoutX="184.0" layoutY="112.0" />
+      <TextField layoutX="184.0" layoutY="145.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField layoutX="185.0" layoutY="177.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField layoutX="184.0" layoutY="210.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField layoutX="185.0" layoutY="241.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField layoutX="184.0" layoutY="272.0" prefHeight="17.0" prefWidth="149.0" />
+      <Label layoutX="363.0" layoutY="245.0" text="Min" />
+      <TextField layoutX="392.0" layoutY="241.0" prefHeight="17.0" prefWidth="149.0" />
+      <RadioButton layoutX="185.0" layoutY="43.0" mnemonicParsing="false" text="In-House" />
+      <RadioButton layoutX="351.0" layoutY="43.0" mnemonicParsing="false" text="Outsourced" />
+      <Label layoutX="68.0" layoutY="42.0" text="Modify Part">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>
