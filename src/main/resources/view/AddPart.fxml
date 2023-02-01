@@ -17,20 +17,20 @@
       <Label layoutX="84.0" layoutY="214.0" prefHeight="17.0" prefWidth="61.0" text="Price/Cost" />
       <Label layoutX="84.0" layoutY="245.0" text="Max" />
       <Label layoutX="84.0" layoutY="276.0" text="Machine ID" />
-      <TextField disable="true" layoutX="184.0" layoutY="112.0" promptText="Auto Gen - Disabled" />
-      <TextField layoutX="184.0" layoutY="145.0" prefHeight="17.0" prefWidth="149.0" />
-      <TextField layoutX="185.0" layoutY="177.0" prefHeight="17.0" prefWidth="149.0" />
-      <TextField layoutX="184.0" layoutY="210.0" prefHeight="17.0" prefWidth="149.0" />
-      <TextField layoutX="185.0" layoutY="241.0" prefHeight="17.0" prefWidth="149.0" />
-      <TextField layoutX="184.0" layoutY="272.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField fx:id="partidTxt" disable="true" layoutX="184.0" layoutY="112.0" promptText="Auto Gen - Disabled" />
+      <TextField fx:id="partnameTxt" layoutX="184.0" layoutY="145.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField fx:id="partinvTxt" layoutX="185.0" layoutY="177.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField fx:id="partpriceTxt" layoutX="184.0" layoutY="210.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField fx:id="partmaxTxt" layoutX="185.0" layoutY="241.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField fx:id="partmachineidTxt" layoutX="184.0" layoutY="272.0" prefHeight="17.0" prefWidth="149.0" />
       <Label layoutX="363.0" layoutY="245.0" text="Min" />
-      <TextField layoutX="392.0" layoutY="241.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField fx:id="partminTxt" layoutX="392.0" layoutY="241.0" prefHeight="17.0" prefWidth="149.0" />
       <Label layoutX="67.0" layoutY="42.0" text="Add Part">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <RadioButton layoutX="185.0" layoutY="43.0" mnemonicParsing="false" text="In-House" />
-      <RadioButton layoutX="351.0" layoutY="43.0" mnemonicParsing="false" text="Outsourced" />
+      <RadioButton fx:id="addpartinhouse" layoutX="185.0" layoutY="43.0" mnemonicParsing="false" text="In-House" />
+      <RadioButton fx:id="addpartoutsourced" layoutX="351.0" layoutY="43.0" mnemonicParsing="false" text="Outsourced" />
    </children>
 </AnchorPane>

@@ -17,10 +17,10 @@
             <Button layoutX="257.0" layoutY="228.0" mnemonicParsing="false" text="Modify" />
             <TableView layoutX="11.0" layoutY="35.0" prefHeight="184.0" prefWidth="384.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Part ID" />
-                <TableColumn prefWidth="75.0" text="Part Name" />
-                  <TableColumn prefWidth="100.0" text="Inventory Level" />
-                  <TableColumn prefWidth="125.0" text="Price/ Cost per Unit" />
+                <TableColumn fx:id="mainpartidCol" prefWidth="75.0" text="Part ID" />
+                <TableColumn fx:id="mainpartnameCol" prefWidth="75.0" text="Part Name" />
+                  <TableColumn fx:id="mainpartinvCol" prefWidth="100.0" text="Inventory Level" />
+                  <TableColumn fx:id="mainpartpriceCol" prefWidth="125.0" text="Price/ Cost per Unit" />
               </columns>
             </TableView>
             <Label layoutX="42.0" layoutY="18.0" text="Parts">
@@ -28,7 +28,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="222.0" layoutY="6.0" prefHeight="25.0" prefWidth="159.0" promptText="Search by Part ID or Name" />
+            <TextField fx:id="mainpartsSearch" layoutX="222.0" layoutY="6.0" prefHeight="25.0" prefWidth="159.0" promptText="Search by Part ID or Name" />
          </children>
       </AnchorPane>
       <Label layoutX="95.0" layoutY="63.0" text="Inventory Management System">
@@ -43,10 +43,10 @@
             <Button layoutX="257.0" layoutY="228.0" mnemonicParsing="false" text="Modify" />
             <TableView layoutX="11.0" layoutY="35.0" prefHeight="184.0" prefWidth="384.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Part ID" />
-                  <TableColumn prefWidth="75.0" text="Part Name" />
-                  <TableColumn prefWidth="100.0" text="Inventory Level" />
-                  <TableColumn prefWidth="125.0" text="Price/ Cost per Unit" />
+                  <TableColumn fx:id="mainprodidCol" prefWidth="75.0" text="Product ID" />
+                  <TableColumn fx:id="mainprodnameCol" prefWidth="86.0" text="Product Name" />
+                  <TableColumn fx:id="mainprodinvCol" prefWidth="105.0" text="Inventory Level" />
+                  <TableColumn fx:id="mainprodpriceCol" prefWidth="117.0" text="Price/ Cost per Unit" />
                </columns>
             </TableView>
             <Label layoutX="42.0" layoutY="18.0" text="Products">
@@ -54,7 +54,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="222.0" layoutY="6.0" prefHeight="25.0" prefWidth="159.0" promptText="Search by Product ID or Name" />
+            <TextField fx:id="mainproductsSearch" layoutX="222.0" layoutY="6.0" prefHeight="25.0" prefWidth="159.0" promptText="Search by Product ID or Name" />
          </children>
       </AnchorPane>
       <Button layoutX="889.0" layoutY="428.0" mnemonicParsing="false" text="Exit" />
