@@ -31,7 +31,7 @@
             <TableColumn fx:id="modprodaddpriceCol" prefWidth="153.0" text="Price/ Cost per Unit" />
          </columns>
       </TableView>
-      <Button layoutX="783.0" layoutY="268.0" mnemonicParsing="false" text="Add" />
+      <Button layoutX="783.0" layoutY="268.0" mnemonicParsing="false" onAction="#onActionAddPart" text="Add" />
       <TableView layoutX="487.0" layoutY="315.0" prefHeight="184.0" prefWidth="406.0">
          <columns>
             <TableColumn fx:id="modprodremovepartidCol" prefWidth="75.0" text="Part ID" />
@@ -40,9 +40,9 @@
             <TableColumn fx:id="modprodremovepriceCol" prefWidth="153.0" text="Price/ Cost per Unit" />
          </columns>
       </TableView>
-      <Button layoutX="726.0" layoutY="516.0" mnemonicParsing="false" text="Remove Associated Part" />
-      <Button layoutX="726.0" layoutY="553.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="810.0" layoutY="553.0" mnemonicParsing="false" text="Cancel" />
+      <Button layoutX="726.0" layoutY="516.0" mnemonicParsing="false" onAction="#onActionRemovePart" text="Remove Associated Part" />
+      <Button layoutX="726.0" layoutY="553.0" mnemonicParsing="false" onAction="#onActionSave" text="Save" />
+      <Button layoutX="810.0" layoutY="553.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
       <Label layoutX="36.0" layoutY="39.0" text="Modify Product">
          <font>
             <Font name="System Bold" size="14.0" />
