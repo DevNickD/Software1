@@ -2,14 +2,41 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddPartController implements Initializable {
+
+    Stage stage;
+    Parent scene;
+
+    @FXML
+    void onActionCancelForm(ActionEvent event) throws IOException {
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+
+    }
+
+    @FXML
+    void onActionSaveForm(ActionEvent event) throws IOException {
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
 
     @FXML
     private RadioButton addpartinhouse;
@@ -38,17 +65,7 @@ public class AddPartController implements Initializable {
     @FXML
     private TextField partpriceTxt;
 
-    @FXML
-    void onActionCancelForm(ActionEvent event) {
-        //System.out.println("CANCEL BUTTON CLICKED");
 
-    }
-
-    @FXML
-    void onActionSaveForm(ActionEvent event) {
-        //System.out.println("Save Button Clicked");
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

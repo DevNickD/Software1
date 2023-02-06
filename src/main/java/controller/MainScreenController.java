@@ -2,13 +2,76 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
+
+    Stage stage;
+    Parent scene;
+
+    @FXML
+    void onActionAddPart(ActionEvent event) throws IOException {
+
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/AddPart.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+
+    }
+
+    @FXML
+    void onActionAddProduct(ActionEvent event) throws IOException {
+
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    @FXML
+    void onActionDeletePart(ActionEvent event) {
+        //System.out.println("Delete Part Button Clicked");
+    }
+
+    @FXML
+    void onActionDeleteProduct(ActionEvent event) {
+        //System.out.println("Delete Product Button Clicked");
+    }
+
+    @FXML
+    void onActionExitProgram(ActionEvent event) {
+        System.exit(0);
+    }
+
+    @FXML
+    void onActionModifyPart(ActionEvent event) throws IOException {
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/ModifyPart.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+
+    }
+
+    @FXML
+    void onActionModifyProduct(ActionEvent event) throws IOException {
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/ModifyProduct.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+
+    }
+
 
     @FXML
     private TableColumn<?, ?> mainpartidCol;
@@ -39,41 +102,6 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private TextField mainproductsSearch;
-
-    @FXML
-    void onActionAddPart(ActionEvent event) {
-        //System.out.println("Add Part Button Clicked");
-    }
-
-    @FXML
-    void onActionAddProduct(ActionEvent event) {
-        //System.out.println("Add Product Button Clicked");
-    }
-
-    @FXML
-    void onActionDeletePart(ActionEvent event) {
-        //System.out.println("Delete Part Button Clicked");
-    }
-
-    @FXML
-    void onActionDeleteProduct(ActionEvent event) {
-        //System.out.println("Delete Product Button Clicked");
-    }
-
-    @FXML
-    void onActionExitProgram(ActionEvent event) {
-        //System.out.println("Exit Button Clicked");
-    }
-
-    @FXML
-    void onActionModifyPart(ActionEvent event) {
-        //System.out.println("Modify Part Button Clicked");
-    }
-
-    @FXML
-    void onActionModifyProduct(ActionEvent event) {
-        //System.out.println("Modify Product Button Clicked");
-    }
 
 
     @Override
