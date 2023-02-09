@@ -60,8 +60,78 @@ public class MainScreenController implements Initializable {
     @FXML
     private TextField mainproductsSearch;
 
+    /**
+     * The part object that is selected.
+     */
+    private static Part part;
+
+    /**
+     * The product object that is selected.
+     */
+    private static Product product;
+
+    /**
+     * The text field for the parts search.
+     */
+
     Stage stage;
     Parent scene;
+
+    /**
+     * Returns the part object that is selected in the part table.
+     */
+    public static Part getPart() {
+        return part;
+    }
+
+    /**
+     * Gets the product object that is selected in the product table.
+     */
+    public static Product getProduct() {
+        return product;
+    }
+
+    /**
+     * Displays various alert messages.
+     *
+     * @param alertType Alert message selector.
+     */
+    private void showAlert(int alertType) {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alertError = new Alert(Alert.AlertType.ERROR);
+
+        switch (alertType) {
+
+            case 1:
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Part not selected");
+                alertError.showAndWait();
+                break;
+            case 2:
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Product not selected");
+                alertError.showAndWait();
+                break;
+            case 3:
+                alert.setTitle("Information");
+                alert.setHeaderText("Part not found");
+                alert.showAndWait();
+                break;
+            case 4:
+                alert.setTitle("Information");
+                alert.setHeaderText("Product not found");
+                alert.showAndWait();
+                break;
+            case 5:
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Parts Associated");
+                alertError.setContentText("All parts must be removed from product before deletion.");
+                alertError.showAndWait();
+                break;
+        }
+    }
+
 
     static boolean confirmAction(String title, String content){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -137,13 +207,22 @@ public class MainScreenController implements Initializable {
             System.exit(0);
         }
     }
-
+    /**
+     * Takes user to Modify Part Screen.
+     * Error message if no part was selected.
+     */
     @FXML
     void onActionModifyPart(ActionEvent event) throws IOException {
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/ModifyPart.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        part = partsTableView.getSelectionModel().getSelectedItem();
+        if(part == null){
+            showAlert(1);
+        }
+        else {
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/view/ModifyPart.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
     }
 
     @FXML

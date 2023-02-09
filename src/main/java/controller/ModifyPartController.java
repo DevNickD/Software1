@@ -15,7 +15,6 @@ import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -37,6 +36,10 @@ public class ModifyPartController implements Initializable {
     private Label labelswap;
     /**
      * The part id text field.
+     * I copy and pasted this from AddPartController instead of from the
+     * sample controller skeleton in the ModifyPart.fxml file. This was
+     * a mistake because I forgot to give the label this fx:id name and
+     * this caused a logical error that I needed to diagnose.
      */
     @FXML
     private TextField modpartidTxt;
@@ -84,41 +87,45 @@ public class ModifyPartController implements Initializable {
     Stage stage;
     Parent scene;
 
-    /*public void setPart(Part partSelected) {
-        this.partSelected = partSelected;
-        partId = Inventory.getAllParts().indexOf(partSelected);
-        ID.setText(Integer.toString(selectedPart.getPartID()));
-        Name.setText(selectedPart.getName());
-        Inventory.setText(Integer.toString(selectedPart.getStock()));
-        Price.setText(Double.toString(selectedPart.getPartCost()));
-        Maximum.setText(Integer.toString(selectedPart.getMax()));
-        Minimum.setText(Integer.toString(selectedPart.getMin()));
-        if(selectedPart instanceof InHouse){
-            InHouse ih = (InHouse) selectedPart;
-            inHouse.setSelected(true);
-            this.inhouseoroutsourced.setText("Machine ID");
-            companyORmachineID.setText(Integer.toString(ih.getMachineID()));
+    /**
+     * Sets swappable label to "Machine ID".
+     *
+     * Label wouldn't change and couldn't figure out why for some time. Then I realized
+     * I never saved the action event modInHouseSelected in the ModifyPart.fxml file.
+     *
+     * I also forgot to give the label a fx:id in ModifyPart/fxml because I thought I
+     * added it after I gave the label in AddPart.fxml an fx:id.
+     * Perhaps if I gave the label a different id name, such as modlabelswap instead of
+     * labelswap, I would have noticed my mistake sooner.
+     */
+    @FXML
+    void modInHouseSelected(ActionEvent event) {
+        if (modpartinhouse.isSelected()) {
+            labelswap.setText("Machine ID");
         }
-        else{
-            OutSourced os = (OutSourced) selectedPart;
-            outsourced.setSelected(true);
-            this.inhouseoroutsourced.setText("Company Name");
-            companyORmachineID.setText(os.getCompanyName());
+    }
+
+    /**
+     * Sets swappable label to "Company Name".
+     *
+     * Label wouldn't change and I couldn't figure out why for some time. Then I realized
+     * I never saved the action event modOutsourcedSelected in the ModifyPart.fxml file.
+     */
+    @FXML
+    void modOutsourcedSelected(ActionEvent event){
+        if (modpartoutsourced.isSelected()) {
+            labelswap.setText("Company Name");
         }
-    }*/
+    }
+
     /**
      * Displays confirmation screen to make sure user wants to cancel changes and go back to main screen.
      */
     @FXML
     void onActionCancelModifyForm(ActionEvent event) throws IOException {
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Cancel Alert");
-        alert.setContentText("Are you sure you want to cancel your changes and return to the main screen?");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        if(MainScreenController.confirmAction("Cancel?", "Are you sure you want to cancel your changes and return to the main screen?")) {
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
@@ -178,28 +185,9 @@ public class ModifyPartController implements Initializable {
             showAlert(1);
         }
     }
-    /**
-     * Sets swappable label to "Machine ID".
-     */
-    @FXML
-    void inHouseRadioButtonSelected(ActionEvent event) {
-        if (modpartinhouse.isSelected()) {
-            labelswap.setText("Machine ID");
-        }
-    }
 
     /**
-     * Sets swappable label to "Company Name".
-     */
-    @FXML
-    void outsourcedRadioButtonSelected(ActionEvent event){
-        if (modpartoutsourced.isSelected()) {
-            labelswap.setText("Company Name");
-        }
-    }
-
-    /**
-     * Displays different alert messages based on specific cases
+     * Displays different alert messages based on specific cases.
      */
     private void showAlert(int alertType) {
 
@@ -215,19 +203,19 @@ public class ModifyPartController implements Initializable {
             case 2:
                 alert.setTitle("Error");
                 alert.setHeaderText("Value for Machine ID is invalid");
-                alert.setContentText("Machine ID must only contain numbers.");
+                alert.setContentText("Machine ID must only contain numbers and cannot be left blank");
                 alert.showAndWait();
                 break;
             case 3:
                 alert.setTitle("Error");
-                alert.setHeaderText("Invalid value for Min");
-                alert.setContentText("Min must be less than Max and a number greater than 0.");
+                alert.setHeaderText("Invalid value for Inventory");
+                alert.setContentText("Inventory must be a number equal to or between Min and Max.");
                 alert.showAndWait();
                 break;
             case 4:
                 alert.setTitle("Error");
-                alert.setHeaderText("Invalid value for Inventory");
-                alert.setContentText("Inventory must be a number equal to or between Min and Max.");
+                alert.setHeaderText("Invalid value for Min");
+                alert.setContentText("Min must be less than Max and a number greater than 0.");
                 alert.showAndWait();
                 break;
             case 5:
@@ -240,21 +228,6 @@ public class ModifyPartController implements Initializable {
     }
 
     /**
-     * Validates that min is a number greater than 0 and less than max.
-     */
-    private boolean minValidate(int min, int max) {
-
-        boolean isValid = true;
-
-        if (min <= 0 || min >= max) {
-            isValid = false;
-            showAlert(3);
-        }
-
-        return isValid;
-    }
-
-    /**
      * Validates that inventory level is equal to or between minimum and maximum inventory level.
      */
     private boolean inventoryValidate(int min, int max, int stock) {
@@ -263,14 +236,52 @@ public class ModifyPartController implements Initializable {
 
         if (stock < min || stock > max) {
             isValid = false;
+            showAlert(3);
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Validates that min is a number greater than 0 and less than max.
+     */
+    private boolean minValidate(int min, int max) {
+
+        boolean isValid = true;
+
+        if (min <= 0 || min >= max) {
+            isValid = false;
             showAlert(4);
         }
 
         return isValid;
     }
+
+    /**
+     * Initializes controller after user is taken to Modify Part Screen.
+     * Text fields are populated with the part selected in the Main Screen.
+     */
         @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+            partSelected = MainScreenController.getPart();
 
-        System.out.println("I am initialized");
-    }
+            if (partSelected instanceof InHouse) {
+                modpartinhouse.setSelected(true);
+                labelswap.setText("Machine ID");
+                modpartmachineidTxt.setText(String.valueOf(((InHouse) partSelected).getMachineId()));
+            }
+
+            if (partSelected instanceof Outsourced){
+                modpartoutsourced.setSelected(true);
+                labelswap.setText("Company Name");
+                modpartmachineidTxt.setText(((Outsourced) partSelected).getCompanyName());
+            }
+
+            modpartidTxt.setText(String.valueOf(partSelected.getId()));
+            modpartnameTxt.setText(partSelected.getName());
+            modpartinvTxt.setText(String.valueOf(partSelected.getStock()));
+            modpartpriceTxt.setText(String.valueOf(partSelected.getPrice()));
+            modpartmaxTxt.setText(String.valueOf(partSelected.getMax()));
+            modpartminTxt.setText(String.valueOf(partSelected.getMin()));
+        }
 }

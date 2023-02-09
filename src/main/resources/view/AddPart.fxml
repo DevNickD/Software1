@@ -31,10 +31,10 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <RadioButton fx:id="addpartinhouse" layoutX="185.0" layoutY="43.0" mnemonicParsing="false" text="In-House">
+      <RadioButton fx:id="addpartinhouse" layoutX="185.0" layoutY="43.0" mnemonicParsing="false" onAction="#inHouseSelected" text="In-House">
          <toggleGroup>
             <ToggleGroup fx:id="ManufacturedTG" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="addpartoutsourced" layoutX="351.0" layoutY="43.0" mnemonicParsing="false" text="Outsourced" toggleGroup="$ManufacturedTG" />
+      <RadioButton fx:id="addpartoutsourced" layoutX="351.0" layoutY="43.0" mnemonicParsing="false" onAction="#outsourcedSelected" text="Outsourced" toggleGroup="$ManufacturedTG" />
    </children>
 </AnchorPane>

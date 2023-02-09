@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller class that adds functionality to the add part screen
+ * Controller class that adds functionality to the add part screen.
  *
  * @author Nicholas Donnarumma
  */
@@ -82,7 +82,7 @@ public class AddPartController implements Initializable {
      */
     @FXML
     void onActionCancelForm(ActionEvent event) throws IOException {
-        if(MainScreenController.confirmAction("Cancel?", "Are you sure?")) {
+        if(MainScreenController.confirmAction("Cancel?", "Are you sure you want to cancel adding a part and return to main screen?")) {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
             stage.setScene(new Scene(scene));
@@ -94,7 +94,7 @@ public class AddPartController implements Initializable {
      * Sets swappable label to "Machine ID".
      */
     @FXML
-    void inHouseRadioButtonSelected(ActionEvent event) {
+    void inHouseSelected(ActionEvent event) {
         if (addpartinhouse.isSelected()) {
             labelswap.setText("Machine ID");
         }
@@ -104,13 +104,13 @@ public class AddPartController implements Initializable {
      * Sets swappable label to "Company Name".
      */
     @FXML
-    void outsourcedRadioButtonSelected(ActionEvent event){
+    void outsourcedSelected(ActionEvent event){
             if (addpartoutsourced.isSelected()) {
                 labelswap.setText("Company Name");
             }
         }
     /**
-     * Displays different alert messages based on specific cases
+     * Displays different alert messages based on specific cases.
      */
     private void showAlert(int alertType) {
 
@@ -126,19 +126,19 @@ public class AddPartController implements Initializable {
             case 2:
                 alert.setTitle("Error");
                 alert.setHeaderText("Value for Machine ID is invalid");
-                alert.setContentText("Machine ID must only contain numbers.");
+                alert.setContentText("Machine ID must only contain numbers and cannot be left blank.");
                 alert.showAndWait();
                 break;
             case 3:
                 alert.setTitle("Error");
-                alert.setHeaderText("Invalid value for Min");
-                alert.setContentText("Min must be less than Max and a number greater than 0.");
+                alert.setHeaderText("Invalid value for Inventory");
+                alert.setContentText("Inventory must be a number equal to or between Min and Max.");
                 alert.showAndWait();
                 break;
             case 4:
                 alert.setTitle("Error");
-                alert.setHeaderText("Invalid value for Inventory");
-                alert.setContentText("Inventory must be a number equal to or between Min and Max.");
+                alert.setHeaderText("Invalid value for Min");
+                alert.setContentText("Min must be less than Max and a number greater than 0.");
                 alert.showAndWait();
                 break;
             case 5:
@@ -149,20 +149,7 @@ public class AddPartController implements Initializable {
                 break;
         }
     }
-    /**
-     * Validates that min is a number greater than 0 and less than max.
-     */
-    private boolean minValidate(int min, int max) {
 
-        boolean isValid = true;
-
-        if (min <= 0 || min >= max) {
-            isValid = false;
-            showAlert(3);
-        }
-
-        return isValid;
-    }
     /**
      * Validates that inventory level is equal to or between minimum and maximum inventory level.
      */
@@ -172,11 +159,27 @@ public class AddPartController implements Initializable {
 
         if (stock < min || stock > max) {
             isValid = false;
+            showAlert(3);
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Validates that min is a number greater than 0 and less than max.
+     */
+    private boolean minValidate(int min, int max) {
+
+        boolean isValid = true;
+
+        if (min <= 0 || min >= max) {
+            isValid = false;
             showAlert(4);
         }
 
         return isValid;
     }
+
     /**
      * Adds a new part to the inventory, that is either in-house or outsourced, then program goes back to Main Screen.
      * Error messages are displayed for incorrect inputs.
@@ -236,7 +239,8 @@ public class AddPartController implements Initializable {
     }
 
     /**
-     * Initializes controller and sets the radio button to be selecting in-house by default.
+     * Initializes controller after user is taken to Add Part Screen.
+     * Sets the radio button to be selecting in-house by default.
      */
 
     @Override
