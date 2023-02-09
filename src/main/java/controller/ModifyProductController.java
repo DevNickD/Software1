@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,8 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Inventory;
+import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,18 +54,34 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     private TextField modprodSearch;
+    /*
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    private ObservableList<Part> originalParts = FXCollections.observableArrayList();
+
+    @FXML public void searchPartButton(ActionEvent event) {
+        String term = modprodSearch.getText();
+        ObservableList foundParts = Inventory.lookupPart(term);
+        if(foundParts.isEmpty()) {
+            MainScreenController.confirmDialog("No Match", "Unable to locate a Part name with: " + term);
+        } else {
+            modprodaddTableView.setItems(foundParts);
+        }
+    }
+*/
+    @FXML
+    private TableView<Part> modprodaddTableView;
 
     @FXML
-    private TableColumn<?, ?> modprodaddinvCol;
+    private TableColumn<Part, Integer> modprodaddinvCol;
 
     @FXML
-    private TableColumn<?, ?> modprodaddpartidCol;
+    private TableColumn<Part, Integer> modprodaddpartidCol;
 
     @FXML
-    private TableColumn<?, ?> modprodaddpartnameCol;
+    private TableColumn<Part, String> modprodaddpartnameCol;
 
     @FXML
-    private TableColumn<?, ?> modprodaddpriceCol;
+    private TableColumn<Part, Double> modprodaddpriceCol;
 
     @FXML
     private TextField modprodidTxt;
@@ -80,6 +102,9 @@ public class ModifyProductController implements Initializable {
     private TextField modprodpriceTxt;
 
     @FXML
+    private TableView<Part> modprodremoveTableView;
+
+    @FXML
     private TableColumn<?, ?> modprodremoveinvCol;
 
     @FXML
@@ -95,6 +120,17 @@ public class ModifyProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        System.out.println("I am initialized");
-    }
+        //Table and Columns parts that aren't associated
+        modprodaddTableView.setItems(Inventory.getAllParts());
+        modprodaddpartidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        modprodaddpartnameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        modprodaddinvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        modprodaddpriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        //Table and Columns for associated parts
+        modprodremoveTableView.setItems(Inventory.getAllParts());
+        modprodremovepartidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        modprodremovepartnameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        modprodremoveinvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        modprodremovepriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));    }
 }

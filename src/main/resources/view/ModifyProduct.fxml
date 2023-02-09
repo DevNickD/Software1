@@ -23,7 +23,7 @@
       <TextField fx:id="modprodmaxTxt" layoutX="120.0" layoutY="290.0" prefHeight="25.0" prefWidth="84.0" />
       <TextField fx:id="modprodminTxt" layoutX="261.0" layoutY="290.0" prefHeight="25.0" prefWidth="84.0" />
       <TextField fx:id="modprodSearch" layoutX="726.0" layoutY="26.0" prefHeight="25.0" prefWidth="167.0" promptText="Search by Part ID or Name" />
-      <TableView layoutX="487.0" layoutY="66.0" prefHeight="184.0" prefWidth="406.0">
+      <TableView fx:id="modprodaddTableView" layoutX="487.0" layoutY="66.0" prefHeight="184.0" prefWidth="406.0">
          <columns>
             <TableColumn fx:id="modprodaddpartidCol" prefWidth="75.0" text="Part ID" />
             <TableColumn fx:id="modprodaddpartnameCol" prefWidth="75.0" text="Part Name" />
@@ -32,7 +32,7 @@
          </columns>
       </TableView>
       <Button layoutX="783.0" layoutY="268.0" mnemonicParsing="false" onAction="#onActionAddPart" text="Add" />
-      <TableView layoutX="487.0" layoutY="315.0" prefHeight="184.0" prefWidth="406.0">
+      <TableView fx:id="modprodremoveTableView" layoutX="487.0" layoutY="315.0" prefHeight="184.0" prefWidth="406.0">
          <columns>
             <TableColumn fx:id="modprodremovepartidCol" prefWidth="75.0" text="Part ID" />
             <TableColumn fx:id="modprodremovepartnameCol" prefWidth="75.0" text="Part Name" />

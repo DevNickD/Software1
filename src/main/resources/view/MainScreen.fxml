@@ -15,7 +15,7 @@
             <Button layoutX="322.0" layoutY="228.0" mnemonicParsing="false" onAction="#onActionDeletePart" text="Delete" />
             <Button layoutX="212.0" layoutY="228.0" mnemonicParsing="false" onAction="#onActionAddPart" text="Add" />
             <Button layoutX="257.0" layoutY="228.0" mnemonicParsing="false" onAction="#onActionModifyPart" text="Modify" />
-            <TableView layoutX="11.0" layoutY="35.0" prefHeight="184.0" prefWidth="384.0">
+            <TableView fx:id="partsTableView" layoutX="11.0" layoutY="35.0" prefHeight="184.0" prefWidth="384.0">
               <columns>
                 <TableColumn fx:id="mainpartidCol" prefWidth="75.0" text="Part ID" />
                 <TableColumn fx:id="mainpartnameCol" prefWidth="75.0" text="Part Name" />
@@ -41,7 +41,7 @@
             <Button layoutX="322.0" layoutY="228.0" mnemonicParsing="false" onAction="#onActionDeleteProduct" text="Delete" />
             <Button layoutX="212.0" layoutY="228.0" mnemonicParsing="false" onAction="#onActionAddProduct" text="Add" />
             <Button layoutX="257.0" layoutY="228.0" mnemonicParsing="false" onAction="#onActionModifyProduct" text="Modify" />
-            <TableView layoutX="11.0" layoutY="35.0" prefHeight="184.0" prefWidth="384.0">
+            <TableView fx:id="productsTableView" layoutX="11.0" layoutY="35.0" prefHeight="184.0" prefWidth="384.0">
                <columns>
                   <TableColumn fx:id="mainprodidCol" prefWidth="75.0" text="Product ID" />
                   <TableColumn fx:id="mainprodnameCol" prefWidth="86.0" text="Product Name" />

@@ -10,7 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Inventory;
+import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,19 +51,19 @@ public class AddProductController implements Initializable {
     }
 
     @FXML
-    private TableView<?> addTableView;
+    private TableView<Part> addTableView;
 
     @FXML
-    private TableColumn<?, ?> addinvlevelCol;
+    private TableColumn<Part, Integer> addinvlevelCol;
 
     @FXML
-    private TableColumn<?, ?> addpartidCol;
+    private TableColumn<Part, Integer> addpartidCol;
 
     @FXML
-    private TableColumn<?, ?> addpartnameCol;
+    private TableColumn<Part, String> addpartnameCol;
 
     @FXML
-    private TableColumn<?, ?> addpriceCol;
+    private TableColumn<Part, Double> addpriceCol;
 
     @FXML
     private TextField addproductSearch;
@@ -84,24 +87,37 @@ public class AddProductController implements Initializable {
     private TextField addproductpriceTxt;
 
     @FXML
-    private TableView<?> removeTableView;
+    private TableView<Part> removeTableView;
 
     @FXML
-    private TableColumn<?, ?> removeinvlevelCol;
+    private TableColumn<Part, Integer> removeinvlevelCol;
 
     @FXML
-    private TableColumn<?, ?> removepartidCol;
+    private TableColumn<Part, Integer> removepartidCol;
 
     @FXML
-    private TableColumn<?, ?> removepartnameCol;
+    private TableColumn<Part, String> removepartnameCol;
 
     @FXML
-    private TableColumn<?, ?> removepriceCol;
+    private TableColumn<Part, Double> removepriceCol;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        System.out.println("I am initialized");
+        //Table and Columns parts that aren't associated
+        addTableView.setItems(Inventory.getAllParts());
+        addpartidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        addpartnameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        addinvlevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        addpriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        //Table and Columns for associated parts
+        removeTableView.setItems(Inventory.getAllParts());
+        removepartidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        removepartnameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        removeinvlevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        removepriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
     }
 }
