@@ -19,6 +19,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class that adds functionality to the add product screen.
+ *
+ * @author Nicholas Donnarumma
+ */
 public class AddProductController implements Initializable {
 
     Stage stage;

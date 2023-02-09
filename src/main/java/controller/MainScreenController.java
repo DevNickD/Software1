@@ -18,6 +18,11 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class that adds functionality to the main screen.
+ *
+ * @author Nicholas Donnarumma
+ */
 public class MainScreenController implements Initializable {
 
     Stage stage;

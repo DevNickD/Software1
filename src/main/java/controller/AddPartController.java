@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller class for add part screen
+ * Controller class that adds functionality to the add part screen
  *
  * @author Nicholas Donnarumma
  */
