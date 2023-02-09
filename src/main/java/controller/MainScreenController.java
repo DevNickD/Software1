@@ -25,6 +25,41 @@ import java.util.ResourceBundle;
  */
 public class MainScreenController implements Initializable {
 
+    @FXML
+    private TableView<Part> partsTableView;
+
+    @FXML
+    private TableColumn<Part, Integer> mainpartidCol;
+
+    @FXML
+    private TableColumn<Part, Integer> mainpartinvCol;
+
+    @FXML
+    private TableColumn<Part, String> mainpartnameCol;
+
+    @FXML
+    private TableColumn<Part, Double> mainpartpriceCol;
+
+    @FXML
+    private TextField mainpartsSearch;
+
+    @FXML
+    private TableView<Product> productsTableView;
+    @FXML
+    private TableColumn<Product, Integer> mainprodidCol;
+
+    @FXML
+    private TableColumn<Product, Integer> mainprodinvCol;
+
+    @FXML
+    private TableColumn<Product, String> mainprodnameCol;
+
+    @FXML
+    private TableColumn<Product, Double> mainprodpriceCol;
+
+    @FXML
+    private TextField mainproductsSearch;
+
     Stage stage;
     Parent scene;
 
@@ -120,41 +155,38 @@ public class MainScreenController implements Initializable {
 
     }
 
-    @FXML
-    private TableView<Part> partsTableView;
-
-    @FXML
-    private TableColumn<Part, Integer> mainpartidCol;
-
-    @FXML
-    private TableColumn<Part, Integer> mainpartinvCol;
-
-    @FXML
-    private TableColumn<Part, String> mainpartnameCol;
-
-    @FXML
-    private TableColumn<Part, Double> mainpartpriceCol;
-
-    @FXML
-    private TextField mainpartsSearch;
-
-    @FXML
-    private TableView<Product> productsTableView;
-    @FXML
-    private TableColumn<Product, Integer> mainprodidCol;
-
-    @FXML
-    private TableColumn<Product, Integer> mainprodinvCol;
-
-    @FXML
-    private TableColumn<Product, String> mainprodnameCol;
-
-    @FXML
-    private TableColumn<Product, Double> mainprodpriceCol;
-
-    @FXML
-    private TextField mainproductsSearch;
-
+    public boolean searchPartId(int id){
+        for(Part part : Inventory.getAllParts()){
+            if(part.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean searchPartName(String name){
+        for(Part part : Inventory.getAllParts()){
+            if(part.getName() == name){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean searchProductId(int id){
+        for(Product product : Inventory.getAllProducts()){
+            if(product.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean searchProductName(String name){
+        for(Product product : Inventory.getAllProducts()){
+            if(product.getName() == name){
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
