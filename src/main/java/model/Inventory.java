@@ -4,6 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Inventory {
+    /**
+     * An ID for a part. Variable used for unique part IDs.
+     */
+    private static int partId = 0;
+
+    /**
+     * An ID for a product. Variable used for unique product IDs.
+     */
+    private static int productId = 0;
+
 
     // Observable Lists from UML Diagram
 
@@ -98,5 +108,18 @@ public class Inventory {
 
     public static ObservableList<Product> getAllProducts(){
         return allProducts;
+    }
+
+    /**
+     * Generates a new product ID.
+     *
+     * @return A unique product ID.
+     */
+    public static int getNewProductId() {
+        return ++productId;
+    }
+
+    public static int getNewPartId() {
+        return ++partId;
     }
 }

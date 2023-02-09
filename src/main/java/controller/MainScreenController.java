@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Inventory;
@@ -18,6 +15,7 @@ import model.Product;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
@@ -25,11 +23,34 @@ public class MainScreenController implements Initializable {
     Stage stage;
     Parent scene;
 
+    static boolean confirmAction(String title, String content){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText("Confirm");
+        alert.setContentText(content);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    static void infoWarning(String title, String header, String content){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
     @FXML
     void onActionAddPart(ActionEvent event) throws IOException {
 
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/AddPart.fxml"));
+        stage.setTitle("Add Part");
         stage.setScene(new Scene(scene));
         stage.show();
 
@@ -40,23 +61,41 @@ public class MainScreenController implements Initializable {
 
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
+        stage.setTitle("Add Product");
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
     @FXML
     void onActionDeletePart(ActionEvent event) {
-        //System.out.println("Delete Part Button Clicked");
+        if (partsTableView.getSelectionModel().isEmpty()){
+            infoWarning("Warning!", "No Part Selected","Please choose part from the above list");
+            return;
+        }
+        if (confirmAction("Warning!", "Would you like to delete this part?")){
+            int selectedPart = partsTableView.getSelectionModel().getSelectedIndex();
+            partsTableView.getItems().remove(selectedPart);
+        }
     }
 
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
-        //System.out.println("Delete Product Button Clicked");
+        if (productsTableView.getSelectionModel().isEmpty()){
+            infoWarning("Warning!", "No Product Selected","Please choose product from the above list");
+            return;
+        }
+        if (confirmAction("Warning!", "Would you like to delete this product?")){
+            int selectedPart = productsTableView.getSelectionModel().getSelectedIndex();
+            productsTableView.getItems().remove(selectedPart);
+        }
     }
 
     @FXML
     void onActionExitProgram(ActionEvent event) {
-        System.exit(0);
+        confirmAction("Exit", "Are you sure you would like to exit the program?");
+        {
+            System.exit(0);
+        }
     }
 
     @FXML
@@ -65,7 +104,6 @@ public class MainScreenController implements Initializable {
         scene = FXMLLoader.load(getClass().getResource("/view/ModifyPart.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
-
     }
 
     @FXML
