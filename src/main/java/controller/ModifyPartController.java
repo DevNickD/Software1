@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller class that adds functionality to the modify part screen.
+ * Controller class that adds functionality to the Modify Part Screen.
  *
  * @author Nicholas Donnarumma
  */
@@ -35,7 +35,7 @@ public class ModifyPartController implements Initializable {
     @FXML
     private Label labelswap;
     /**
-     * The part id text field.
+     * The part id text field for user input.
      * I copy and pasted this from AddPartController instead of from the
      * sample controller skeleton in the ModifyPart.fxml file. This was
      * a mistake because I forgot to give the label this fx:id name and
@@ -49,27 +49,27 @@ public class ModifyPartController implements Initializable {
     @FXML
     private RadioButton modpartinhouse;
     /**
-     * The part inventory level text field.
+     * The part inventory level text field for user input.
      */
     @FXML
     private TextField modpartinvTxt;
     /**
-     * The part machine ID text field.
+     * The part machine ID text field for user input.
      */
     @FXML
     private TextField modpartmachineidTxt;
     /**
-     * The part maximum level text field.
+     * The part maximum level text field for user input.
      */
     @FXML
     private TextField modpartmaxTxt;
     /**
-     * The part minimum level text field.
+     * The part minimum level text field for user input.
      */
     @FXML
     private TextField modpartminTxt;
     /**
-     * The part name text field.
+     * The part name text field for user input.
      */
     @FXML
     private TextField modpartnameTxt;
@@ -79,13 +79,54 @@ public class ModifyPartController implements Initializable {
     @FXML
     private RadioButton modpartoutsourced;
     /**
-     * The part price text field.
+     * The part price text field for user input.
      */
     @FXML
     private TextField modpartpriceTxt;
 
     Stage stage;
     Parent scene;
+
+    /**
+     * Displays different alert messages based on specific cases.
+     */
+    private void showAlert(int alertType) {
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        switch (alertType) {
+            case 1:
+                alert.setTitle("Error");
+                alert.setHeaderText("There is an error adding the part");
+                alert.setContentText("Form cannot contain empty fields or invalid values.");
+                alert.showAndWait();
+                break;
+            case 2:
+                alert.setTitle("Error");
+                alert.setHeaderText("Value for Machine ID is invalid");
+                alert.setContentText("Machine ID must only contain numbers and cannot be left blank");
+                alert.showAndWait();
+                break;
+            case 3:
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid value for Inventory");
+                alert.setContentText("Inventory must be a number equal to or between Min and Max.");
+                alert.showAndWait();
+                break;
+            case 4:
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid value for Min");
+                alert.setContentText("Min must be less than Max and a number greater than 0.");
+                alert.showAndWait();
+                break;
+            case 5:
+                alert.setTitle("Error");
+                alert.setHeaderText("Name Is Empty");
+                alert.setContentText("Name field cannot be empty.");
+                alert.showAndWait();
+                break;
+        }
+    }
 
     /**
      * Sets swappable label to "Machine ID".
@@ -122,7 +163,7 @@ public class ModifyPartController implements Initializable {
      * Displays confirmation screen to make sure user wants to cancel changes and go back to main screen.
      */
     @FXML
-    public void onActionCancelModifyForm(ActionEvent event) throws IOException {
+    void onActionCancelModifyForm(ActionEvent event) throws IOException {
 
         if(MainScreenController.confirmAction("Cancel?", "Are you sure you want to cancel your changes and return to the main screen?")) {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -138,7 +179,7 @@ public class ModifyPartController implements Initializable {
      * The fields are validated to prevent empty and/or invalid values.
      */
     @FXML
-    public void onActionSaveModifyForm(ActionEvent event) throws IOException {
+    void onActionSaveModifyForm(ActionEvent event) throws IOException {
         try {
             int id = partSelected.getId();
             String name = modpartnameTxt.getText();
@@ -183,47 +224,6 @@ public class ModifyPartController implements Initializable {
         }
         catch(Exception e) {
             showAlert(1);
-        }
-    }
-
-    /**
-     * Displays different alert messages based on specific cases.
-     */
-    private void showAlert(int alertType) {
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-
-        switch (alertType) {
-            case 1:
-                alert.setTitle("Error");
-                alert.setHeaderText("There is an error adding the part");
-                alert.setContentText("Form contains empty fields or invalid values.");
-                alert.showAndWait();
-                break;
-            case 2:
-                alert.setTitle("Error");
-                alert.setHeaderText("Value for Machine ID is invalid");
-                alert.setContentText("Machine ID must only contain numbers and cannot be left blank");
-                alert.showAndWait();
-                break;
-            case 3:
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid value for Inventory");
-                alert.setContentText("Inventory must be a number equal to or between Min and Max.");
-                alert.showAndWait();
-                break;
-            case 4:
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid value for Min");
-                alert.setContentText("Min must be less than Max and a number greater than 0.");
-                alert.showAndWait();
-                break;
-            case 5:
-                alert.setTitle("Error");
-                alert.setHeaderText("Name Is Empty");
-                alert.setContentText("Name field cannot be empty.");
-                alert.showAndWait();
-                break;
         }
     }
 

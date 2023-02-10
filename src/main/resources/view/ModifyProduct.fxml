@@ -22,7 +22,7 @@
       <TextField fx:id="modprodpriceTxt" layoutX="120.0" layoutY="255.0" prefHeight="25.0" prefWidth="84.0" />
       <TextField fx:id="modprodmaxTxt" layoutX="120.0" layoutY="290.0" prefHeight="25.0" prefWidth="84.0" />
       <TextField fx:id="modprodminTxt" layoutX="261.0" layoutY="290.0" prefHeight="25.0" prefWidth="84.0" />
-      <TextField fx:id="modprodSearch" layoutX="726.0" layoutY="26.0" prefHeight="25.0" prefWidth="167.0" promptText="Search by Part ID or Name" />
+      <TextField fx:id="modprodSearch" layoutX="726.0" layoutY="26.0" onAction="#searchPart" onKeyPressed="#partSearchCleared" prefHeight="25.0" prefWidth="167.0" promptText="Search by Part ID or Name" />
       <TableView fx:id="modprodaddTableView" layoutX="487.0" layoutY="66.0" prefHeight="184.0" prefWidth="406.0">
          <columns>
             <TableColumn fx:id="modprodaddpartidCol" prefWidth="75.0" text="Part ID" />

@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller class that adds functionality to the add part screen.
+ * Controller class that adds functionality to the Add Part Screen.
  *
  * @author Nicholas Donnarumma
  */
@@ -39,37 +39,37 @@ public class AddPartController implements Initializable {
     @FXML
     private RadioButton addpartoutsourced;
     /**
-     * The part id text field.
+     * The part id text field for user input.
      */
     @FXML
     private TextField partidTxt;
     /**
-     * The part inventory level text field.
+     * The part inventory level text field for user input.
      */
     @FXML
     private TextField partinvTxt;
     /**
-     * The part machine ID text field.
+     * The part machine ID text field for user input.
      */
     @FXML
     private TextField partmachineidTxt;
     /**
-     * The part maximum level text field.
+     * The part maximum level text field for user input.
      */
     @FXML
     private TextField partmaxTxt;
     /**
-     * The part minimum level text field.
+     * The part minimum level text field for user input.
      */
     @FXML
     private TextField partminTxt;
     /**
-     * The part name text field.
+     * The part name text field for user input.
      */
     @FXML
     private TextField partnameTxt;
     /**
-     * The part price text field.
+     * The part price text field for user input.
      */
     @FXML
     private TextField partpriceTxt;
@@ -77,38 +77,6 @@ public class AddPartController implements Initializable {
     Stage stage;
     Parent scene;
 
-    /**
-     * Displays confirmation screen to make sure user wants to cancel and go back to main screen.
-     */
-    @FXML
-    public void onActionCancelForm(ActionEvent event) throws IOException {
-        if(MainScreenController.confirmAction("Cancel?", "Are you sure you want to cancel adding a part and return to main screen?")) {
-            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
-            stage.setScene(new Scene(scene));
-            stage.show();
-        }
-    }
-
-    /**
-     * Sets swappable label to "Machine ID".
-     */
-    @FXML
-    public void inHouseSelected(ActionEvent event) {
-        if (addpartinhouse.isSelected()) {
-            labelswap.setText("Machine ID");
-        }
-   }
-
-    /**
-     * Sets swappable label to "Company Name".
-     */
-    @FXML
-    public void outsourcedSelected(ActionEvent event){
-            if (addpartoutsourced.isSelected()) {
-                labelswap.setText("Company Name");
-            }
-        }
     /**
      * Displays different alert messages based on specific cases.
      */
@@ -120,7 +88,7 @@ public class AddPartController implements Initializable {
             case 1:
                 alert.setTitle("Error");
                 alert.setHeaderText("There is an error adding the part");
-                alert.setContentText("Form contains empty fields or invalid values.");
+                alert.setContentText("Form cannot contain empty fields or invalid values.");
                 alert.showAndWait();
                 break;
             case 2:
@@ -149,6 +117,40 @@ public class AddPartController implements Initializable {
                 break;
         }
     }
+
+
+    /**
+     * Displays confirmation alert to make sure user wants to cancel and go back to Main Screen.
+     */
+    @FXML
+    void onActionCancelForm(ActionEvent event) throws IOException {
+        if(MainScreenController.confirmAction("Cancel?", "Are you sure you want to cancel adding a part and return to main screen?")) {
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
+    }
+
+    /**
+     * Sets swappable label to "Machine ID".
+     */
+    @FXML
+    public void inHouseSelected(ActionEvent event) {
+        if (addpartinhouse.isSelected()) {
+            labelswap.setText("Machine ID");
+        }
+   }
+
+    /**
+     * Sets swappable label to "Company Name".
+     */
+    @FXML
+    public void outsourcedSelected(ActionEvent event){
+            if (addpartoutsourced.isSelected()) {
+                labelswap.setText("Company Name");
+            }
+        }
 
     /**
      * Validates that inventory level is equal to or between minimum and maximum inventory level.
@@ -186,7 +188,7 @@ public class AddPartController implements Initializable {
      * The fields are validated to prevent empty and/or invalid values.
      */
     @FXML
-    public void onActionSaveForm(ActionEvent event) throws IOException {
+    void onActionSaveForm(ActionEvent event) throws IOException {
 
         try {
             int id = 0;

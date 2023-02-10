@@ -111,9 +111,7 @@ public class Inventory {
     }
 
     /**
-     * Generates a new product ID.
-     *
-     * @return A unique product ID.
+     * Generates a new product ID or Part ID.
      */
     public static int getNewProductId() {
         return ++productId;

@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Controller class that adds functionality to the main screen.
+ * Controller class that adds functionality to the Main Screen.
  *
  * @author Nicholas Donnarumma
  */
@@ -102,14 +102,14 @@ public class MainScreenController implements Initializable {
     Parent scene;
 
     /**
-     * Returns the part object that is selected in the part table.
+     * Returns the part object that is selected in the Parts Table.
      */
     public static Part getPart() {
         return part;
     }
 
     /**
-     * Gets the product object that is selected in the product table.
+     * Gets the product object that is selected in the Products Table.
      */
     public static Product getProduct() {
         return product;
@@ -175,7 +175,7 @@ public class MainScreenController implements Initializable {
      * Takes the user to the Add Part Screen.
      */
     @FXML
-    public void onActionAddPart(ActionEvent event) throws IOException {
+    void onActionAddPart(ActionEvent event) throws IOException {
 
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/AddPart.fxml"));
@@ -189,7 +189,7 @@ public class MainScreenController implements Initializable {
      * Takes the user to the Add Product Screen.
      */
     @FXML
-    public void onActionAddProduct(ActionEvent event) throws IOException {
+    void onActionAddProduct(ActionEvent event) throws IOException {
 
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
@@ -199,12 +199,12 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Deletes the selected part from the parts table.
+     * Deletes the selected part from the Parts Table.
      * Confirmation is required to make sure it wasn't an accident.
      */
 
     @FXML
-    public void onActionDeletePart(ActionEvent event) {
+    void onActionDeletePart(ActionEvent event) {
         if (partsTableView.getSelectionModel().isEmpty()){
             showAlert(1);
             return;
@@ -216,11 +216,11 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Deletes the selected product from the products table.
+     * Deletes the selected product from the Products Table.
      * Confirmation is required to make sure it wasn't an accident.
      */
     @FXML
-    public void onActionDeleteProduct(ActionEvent event) {
+    void onActionDeleteProduct(ActionEvent event) {
         if (productsTableView.getSelectionModel().isEmpty()){
             showAlert(2);
             return;
@@ -235,7 +235,7 @@ public class MainScreenController implements Initializable {
      * Exits the program when Exit button is clicked.
      */
     @FXML
-    public void onActionExitProgram(ActionEvent event) {
+    void onActionExitProgram(ActionEvent event) {
             System.exit(0);
     }
     /**
@@ -243,7 +243,7 @@ public class MainScreenController implements Initializable {
      * Error message if no part was selected.
      */
     @FXML
-    public void onActionModifyPart(ActionEvent event) throws IOException {
+    void onActionModifyPart(ActionEvent event) throws IOException {
         part = partsTableView.getSelectionModel().getSelectedItem();
         if(part == null){
             showAlert(1);
@@ -260,9 +260,9 @@ public class MainScreenController implements Initializable {
      * Error message if no product was selected.
      */
     @FXML
-    public void onActionModifyProduct(ActionEvent event) throws IOException {
+    void onActionModifyProduct(ActionEvent event) throws IOException {
         product = productsTableView.getSelectionModel().getSelectedItem();
-        if (part == null) {
+        if (product == null) {
             showAlert(2);
         } else {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -353,8 +353,8 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Initializes Main Screen controller after program is started.
-     * The Product and Part tables are populated with default values.
+     * Initializes Main Screen Controller after program is started.
+     * The Product and Part tables are populated with values.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
