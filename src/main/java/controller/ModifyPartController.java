@@ -99,7 +99,7 @@ public class ModifyPartController implements Initializable {
      * labelswap, I would have noticed my mistake sooner.
      */
     @FXML
-    void modInHouseSelected(ActionEvent event) {
+    public void modInHouseSelected(ActionEvent event) {
         if (modpartinhouse.isSelected()) {
             labelswap.setText("Machine ID");
         }
@@ -112,7 +112,7 @@ public class ModifyPartController implements Initializable {
      * I never saved the action event modOutsourcedSelected in the ModifyPart.fxml file.
      */
     @FXML
-    void modOutsourcedSelected(ActionEvent event){
+    public void modOutsourcedSelected(ActionEvent event){
         if (modpartoutsourced.isSelected()) {
             labelswap.setText("Company Name");
         }
@@ -122,7 +122,7 @@ public class ModifyPartController implements Initializable {
      * Displays confirmation screen to make sure user wants to cancel changes and go back to main screen.
      */
     @FXML
-    void onActionCancelModifyForm(ActionEvent event) throws IOException {
+    public void onActionCancelModifyForm(ActionEvent event) throws IOException {
 
         if(MainScreenController.confirmAction("Cancel?", "Are you sure you want to cancel your changes and return to the main screen?")) {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -138,7 +138,7 @@ public class ModifyPartController implements Initializable {
      * The fields are validated to prevent empty and/or invalid values.
      */
     @FXML
-    void onActionSaveModifyForm(ActionEvent event) throws IOException {
+    public void onActionSaveModifyForm(ActionEvent event) throws IOException {
         try {
             int id = partSelected.getId();
             String name = modpartnameTxt.getText();

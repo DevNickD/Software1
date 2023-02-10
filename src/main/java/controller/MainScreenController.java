@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.Part;
@@ -24,39 +27,64 @@ import java.util.ResourceBundle;
  * @author Nicholas Donnarumma
  */
 public class MainScreenController implements Initializable {
-
+    /**
+     * Table View for the Parts table in the Main Screen.
+     */
     @FXML
     private TableView<Part> partsTableView;
-
+    /**
+     * The ID column for the Main Screen's Parts Table.
+     */
     @FXML
     private TableColumn<Part, Integer> mainpartidCol;
-
+    /**
+     * The Inventory Level column for the Main Screen's Parts Table.
+     */
     @FXML
     private TableColumn<Part, Integer> mainpartinvCol;
-
+    /**
+     * The Name column for the Main Screen's Parts Table.
+     */
     @FXML
     private TableColumn<Part, String> mainpartnameCol;
-
+    /**
+     * The Price column for the Main Screen's Parts Table.
+     */
     @FXML
     private TableColumn<Part, Double> mainpartpriceCol;
-
+    /**
+     * The text field for the parts search functionality.
+     */
     @FXML
     private TextField mainpartsSearch;
-
+    /**
+     * Table View for the Products table in the Main Screen.
+     */
     @FXML
     private TableView<Product> productsTableView;
+    /**
+     * The ID column for the Main Screen's Products Table.
+     */
     @FXML
     private TableColumn<Product, Integer> mainprodidCol;
-
+    /**
+     * The Inventory Level column for the Main Screen's Products Table.
+     */
     @FXML
     private TableColumn<Product, Integer> mainprodinvCol;
-
+    /**
+     * The Name column for the Main Screen's Products Table.
+     */
     @FXML
     private TableColumn<Product, String> mainprodnameCol;
-
+    /**
+     * The Price column for the Main Screen's Products Table.
+     */
     @FXML
     private TableColumn<Product, Double> mainprodpriceCol;
-
+    /**
+     * The text field for the products search functionality.
+     */
     @FXML
     private TextField mainproductsSearch;
 
@@ -69,10 +97,6 @@ public class MainScreenController implements Initializable {
      * The product object that is selected.
      */
     private static Product product;
-
-    /**
-     * The text field for the parts search.
-     */
 
     Stage stage;
     Parent scene;
@@ -92,9 +116,7 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Displays various alert messages.
-     *
-     * @param alertType Alert message selector.
+     * Displays different alert messages based on specific cases.
      */
     private void showAlert(int alertType) {
 
@@ -105,35 +127,37 @@ public class MainScreenController implements Initializable {
 
             case 1:
                 alertError.setTitle("Error");
-                alertError.setHeaderText("Part not selected");
+                alertError.setHeaderText("A part needs to be selected");
                 alertError.showAndWait();
                 break;
             case 2:
                 alertError.setTitle("Error");
-                alertError.setHeaderText("Product not selected");
+                alertError.setHeaderText("A product needs to be selected");
                 alertError.showAndWait();
                 break;
             case 3:
                 alert.setTitle("Information");
-                alert.setHeaderText("Part not found");
+                alert.setHeaderText("Part was not found");
                 alert.showAndWait();
                 break;
             case 4:
                 alert.setTitle("Information");
-                alert.setHeaderText("Product not found");
+                alert.setHeaderText("Product was not found");
                 alert.showAndWait();
                 break;
             case 5:
                 alertError.setTitle("Error");
-                alertError.setHeaderText("Parts Associated");
+                alertError.setHeaderText("Product Has Associated Parts");
                 alertError.setContentText("All parts must be removed from product before deletion.");
                 alertError.showAndWait();
                 break;
         }
     }
 
-
-    static boolean confirmAction(String title, String content){
+    /**
+     * Method for confirming if user really wants to delete or cancel.
+     */
+    public static boolean confirmAction(String title, String content){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText("Confirm");
@@ -147,16 +171,11 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    static void infoWarning(String title, String header, String content){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
+    /**
+     * Takes the user to the Add Part Screen.
+     */
     @FXML
-    void onActionAddPart(ActionEvent event) throws IOException {
+    public void onActionAddPart(ActionEvent event) throws IOException {
 
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/AddPart.fxml"));
@@ -166,8 +185,11 @@ public class MainScreenController implements Initializable {
 
     }
 
+    /**
+     * Takes the user to the Add Product Screen.
+     */
     @FXML
-    void onActionAddProduct(ActionEvent event) throws IOException {
+    public void onActionAddProduct(ActionEvent event) throws IOException {
 
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
@@ -176,22 +198,31 @@ public class MainScreenController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Deletes the selected part from the parts table.
+     * Confirmation is required to make sure it wasn't an accident.
+     */
+
     @FXML
-    void onActionDeletePart(ActionEvent event) {
+    public void onActionDeletePart(ActionEvent event) {
         if (partsTableView.getSelectionModel().isEmpty()){
-            infoWarning("Warning!", "No Part Selected","Please choose part from the above list");
+            showAlert(1);
             return;
         }
-        if (confirmAction("Warning!", "Would you like to delete this part?")){
+        if (confirmAction("Warning!", "Are you sure you would like to delete this part?")){
             int selectedPart = partsTableView.getSelectionModel().getSelectedIndex();
             partsTableView.getItems().remove(selectedPart);
         }
     }
 
+    /**
+     * Deletes the selected product from the products table.
+     * Confirmation is required to make sure it wasn't an accident.
+     */
     @FXML
-    void onActionDeleteProduct(ActionEvent event) {
+    public void onActionDeleteProduct(ActionEvent event) {
         if (productsTableView.getSelectionModel().isEmpty()){
-            infoWarning("Warning!", "No Product Selected","Please choose product from the above list");
+            showAlert(2);
             return;
         }
         if (confirmAction("Warning!", "Would you like to delete this product?")){
@@ -200,19 +231,19 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Exits the program when Exit button is clicked.
+     */
     @FXML
-    void onActionExitProgram(ActionEvent event) {
-        confirmAction("Exit", "Are you sure you would like to exit the program?");
-        {
+    public void onActionExitProgram(ActionEvent event) {
             System.exit(0);
-        }
     }
     /**
      * Takes user to Modify Part Screen.
      * Error message if no part was selected.
      */
     @FXML
-    void onActionModifyPart(ActionEvent event) throws IOException {
+    public void onActionModifyPart(ActionEvent event) throws IOException {
         part = partsTableView.getSelectionModel().getSelectedItem();
         if(part == null){
             showAlert(1);
@@ -224,49 +255,107 @@ public class MainScreenController implements Initializable {
             stage.show();
         }
     }
-
+    /**
+     * Takes user to Modify Product Screen.
+     * Error message if no product was selected.
+     */
     @FXML
-    void onActionModifyProduct(ActionEvent event) throws IOException {
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/ModifyProduct.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+    public void onActionModifyProduct(ActionEvent event) throws IOException {
+        product = productsTableView.getSelectionModel().getSelectedItem();
+        if (part == null) {
+            showAlert(2);
+        } else {
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/view/ModifyProduct.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
 
-    }
-
-    public boolean searchPartId(int id){
-        for(Part part : Inventory.getAllParts()){
-            if(part.getId() == id){
-                return true;
-            }
         }
-        return false;
-    }
-    public boolean searchPartName(String name){
-        for(Part part : Inventory.getAllParts()){
-            if(part.getName() == name){
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean searchProductId(int id){
-        for(Product product : Inventory.getAllProducts()){
-            if(product.getId() == id){
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean searchProductName(String name){
-        for(Product product : Inventory.getAllProducts()){
-            if(product.getName() == name){
-                return true;
-            }
-        }
-        return false;
     }
 
+    /**
+     * A search is executed to find parts with an id or name that matches the user's input.
+     * Name can be partial and it is case sensitive.
+     * Enter must be pressed for search to be executed.
+     * After parts are found, table will show only those matching parts.
+     * If no matching parts are found, an error message will be displayed.
+     */
+    @FXML
+    void searchPart(ActionEvent event) {
+
+        ObservableList<Part> allParts = Inventory.getAllParts();
+        ObservableList<Part> partsFound = FXCollections.observableArrayList();
+        String searchPartInput = mainpartsSearch.getText();
+
+        for (Part part : allParts) {
+            if (String.valueOf(part.getId()).contains(searchPartInput) ||
+                    part.getName().contains(searchPartInput)) {
+                partsFound.add(part);
+            }
+        }
+
+        partsTableView.setItems(partsFound);
+
+        if (partsFound.size() == 0) {
+            showAlert(3);
+        }
+    }
+
+    /**
+     * When parts search text field is cleared by user, the table is
+     * repopulated with all parts. User doesn't need to press enter.
+     */
+    @FXML
+    void partSearchCleared(KeyEvent event) {
+        if (mainpartsSearch.getText().isEmpty()) {
+            partsTableView.setItems(Inventory.getAllParts());
+        }
+    }
+
+    /**
+     * A search is executed to find products with an id or name that matches the user's input.
+     * Name can be partial and it is case sensitive.
+     * Enter must be pressed for search to be executed.
+     * After products are found, table will show only those matching products.
+     * If no matching products are found, an error message will be displayed.
+     */
+    @FXML
+    void searchProduct(ActionEvent event) {
+
+        ObservableList<Product> allProducts = Inventory.getAllProducts();
+        ObservableList<Product> productsFound = FXCollections.observableArrayList();
+        String searchProductInput = mainproductsSearch.getText();
+
+        for (Product product : allProducts) {
+            if (String.valueOf(product.getId()).contains(searchProductInput) ||
+                    product.getName().contains(searchProductInput)) {
+                productsFound.add(product);
+            }
+        }
+
+        productsTableView.setItems(productsFound);
+
+        if (productsFound.size() == 0) {
+            showAlert(4);
+        }
+    }
+
+    /**
+     * When products search text field is cleared by user, the table is
+     * repopulated with all products. User doesn't need to press enter.
+     */
+    @FXML
+    void productSearchCleared(KeyEvent event) {
+
+        if (mainproductsSearch.getText().isEmpty()) {
+            productsTableView.setItems(Inventory.getAllProducts());
+        }
+    }
+
+    /**
+     * Initializes Main Screen controller after program is started.
+     * The Product and Part tables are populated with default values.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

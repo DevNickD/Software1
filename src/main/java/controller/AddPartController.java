@@ -81,7 +81,7 @@ public class AddPartController implements Initializable {
      * Displays confirmation screen to make sure user wants to cancel and go back to main screen.
      */
     @FXML
-    void onActionCancelForm(ActionEvent event) throws IOException {
+    public void onActionCancelForm(ActionEvent event) throws IOException {
         if(MainScreenController.confirmAction("Cancel?", "Are you sure you want to cancel adding a part and return to main screen?")) {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
@@ -94,7 +94,7 @@ public class AddPartController implements Initializable {
      * Sets swappable label to "Machine ID".
      */
     @FXML
-    void inHouseSelected(ActionEvent event) {
+    public void inHouseSelected(ActionEvent event) {
         if (addpartinhouse.isSelected()) {
             labelswap.setText("Machine ID");
         }
@@ -104,7 +104,7 @@ public class AddPartController implements Initializable {
      * Sets swappable label to "Company Name".
      */
     @FXML
-    void outsourcedSelected(ActionEvent event){
+    public void outsourcedSelected(ActionEvent event){
             if (addpartoutsourced.isSelected()) {
                 labelswap.setText("Company Name");
             }
@@ -186,7 +186,7 @@ public class AddPartController implements Initializable {
      * The fields are validated to prevent empty and/or invalid values.
      */
     @FXML
-    void onActionSaveForm(ActionEvent event) throws IOException {
+    public void onActionSaveForm(ActionEvent event) throws IOException {
 
         try {
             int id = 0;
