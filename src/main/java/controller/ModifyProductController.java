@@ -114,7 +114,7 @@ public class ModifyProductController implements Initializable {
     /**
      * A list containing the product's Associated Parts.
      */
-    private ObservableList<Part> assocParts = FXCollections.observableArrayList();
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     /**
      * The product object selected in the MainScreenController.
      */
@@ -259,16 +259,13 @@ public class ModifyProductController implements Initializable {
     @FXML
     void onActionAddPart(ActionEvent event) {
         Part partSelected = modprodaddTableView.getSelectionModel().getSelectedItem();
-        productSelected.addAssociatedPart(partSelected);
-        productSelected.setAssociatedParts(productSelected.getAllAssociatedParts());
 
-        ///if (partSelected == null){
-            //showAlert(6);
-       // }
-       // else {
-            assocParts.add(partSelected);
-            modprodremoveTableView.setItems(assocParts);
-       // }
+        if (partSelected == null) {
+            showAlert(6);
+       } else {
+            associatedParts.add(partSelected);
+            modprodremoveTableView.setItems(associatedParts);
+        }
     }
 
     /**
@@ -309,9 +306,49 @@ public class ModifyProductController implements Initializable {
      */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
+        /*
+        int productIndex = Inventory.getAllProducts().
+                indexOf(productSelected);
+
+        // Gathering form data
+        String productName = modprodnameTxt.getText();
+        int productID = Integer.parseInt(modprodidTxt.getText());
+        int productInventory = Integer.parseInt(modprodinvTxt.getText());
+        double productPrice = Double.parseDouble(modprodpriceTxt.getText());
+        int productMax = Integer.parseInt(modprodmaxTxt.getText());
+        int productMin = Integer.parseInt(modprodminTxt.getText());
+        // How many Parts are associated with this Product?
+        int associatedPartArraySize = productSelected.getAllAssociatedParts().size();
+        // No Associated Parts found for this Product
+        if(associatedPartArraySize == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Associated Part Found");
+            alert.setHeaderText("Products must have Parts.");
+            alert.setContentText(
+                    "Please Add a Part to this Product before Saving");
+            alert.show();
+        }
+        else {
+            // Setting the new Product values
+            productSelected.setId(productID);
+            productSelected.setName(productName);
+            productSelected.setStock(productInventory);
+            productSelected.setPrice(productPrice);
+            productSelected.setMax(productMax);
+            productSelected.setMin(productMin);
+
+
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
+        */
+
         try {
-            /*
+
             int id = productSelected.getId();
+           // int id = Integer.parseInt(modprodidTxt.getText());
             String name = modprodnameTxt.getText();
             Double price = Double.parseDouble(modprodpriceTxt.getText());
             int stock = Integer.parseInt(modprodinvTxt.getText());
@@ -323,49 +360,36 @@ public class ModifyProductController implements Initializable {
                 showAlert(7);
             } else {
                 if (minValidate(min, max) && inventoryValidate(min, max, stock)) {
+
                     Product newProduct = new Product(id, name, price, stock, min, max);
-                    for (Part part : assocParts) {
-                        newProduct.addAssociatedPart(part);
+
+                    for (Part associatedPart : associatedParts) {
+                        newProduct.addAssociatedPart(associatedPart);
                     }
 
                     Inventory.addProduct(newProduct);
                     Inventory.deleteProduct(productSelected);
-*/
-            int id = productSelected.getId();
-            String name = modprodnameTxt.getText();
-            Double price = Double.parseDouble(modprodpriceTxt.getText());
-            int stock = Integer.parseInt(modprodinvTxt.getText());
-            int min = Integer.parseInt(modprodminTxt.getText());
-            int max = Integer.parseInt(modprodmaxTxt.getText());
-            if (name.isEmpty()) {
-                showAlert(7);
-            } else {
-                if (minValidate(min, max) && inventoryValidate(min, max, stock)) {
-            productSelected.setId(Integer.parseInt(modprodidTxt.getText()));
-            productSelected.setName(modprodnameTxt.getText());
-            productSelected.setPrice(Double.parseDouble(modprodpriceTxt.getText()));
-            productSelected.setStock(Integer.parseInt(modprodinvTxt.getText()));
-            productSelected.setMin(Integer.parseInt(modprodminTxt.getText()));
-            productSelected.setMax(Integer.parseInt(modprodmaxTxt.getText()));
-            //productSelected.setAssociatedParts(productSelected.getAllAssociatedParts());
-
                     stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                     scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
                     stage.setScene(new Scene(scene));
                     stage.show();
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception e){
             showAlert(3);
         }
-
     }
+
     /**
      * Initializes Modify Product Screen Controller.
      * The text fields are populated based on product selected in Main Screen.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //Product product = Inventory.getAllProducts().get(productIndex);
+        //productID = getProductInventory().get(productIndex).getProductID();
+
         productSelected = MainScreenController.getProduct();
 
         modprodaddpartidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
