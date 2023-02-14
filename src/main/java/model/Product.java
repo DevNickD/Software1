@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
 /**
  * The class for creating products.
  * Each product contains a list of associated parts that may or may not be empty.
+ *
+ * @author Nicholas Donnarumma
  */
 public class Product {
 

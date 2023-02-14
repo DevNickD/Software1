@@ -27,61 +27,73 @@ import java.util.ResourceBundle;
  * @author Nicholas Donnarumma
  */
 public class MainScreenController implements Initializable {
+
     /**
      * Table View for the Parts table in the Main Screen.
      */
     @FXML
     private TableView<Part> partsTableView;
+
     /**
      * The ID column for the Main Screen's Parts Table.
      */
     @FXML
     private TableColumn<Part, Integer> mainpartidCol;
+
     /**
      * The Inventory Level column for the Main Screen's Parts Table.
      */
     @FXML
     private TableColumn<Part, Integer> mainpartinvCol;
+
     /**
      * The Name column for the Main Screen's Parts Table.
      */
     @FXML
     private TableColumn<Part, String> mainpartnameCol;
+
     /**
      * The Price column for the Main Screen's Parts Table.
      */
     @FXML
     private TableColumn<Part, Double> mainpartpriceCol;
+
     /**
      * The text field for the parts search functionality.
      */
     @FXML
     private TextField mainpartsSearch;
+
     /**
      * Table View for the Products table in the Main Screen.
      */
     @FXML
     private TableView<Product> productsTableView;
+
     /**
      * The ID column for the Main Screen's Products Table.
      */
     @FXML
     private TableColumn<Product, Integer> mainprodidCol;
+
     /**
      * The Inventory Level column for the Main Screen's Products Table.
      */
     @FXML
     private TableColumn<Product, Integer> mainprodinvCol;
+
     /**
      * The Name column for the Main Screen's Products Table.
      */
     @FXML
     private TableColumn<Product, String> mainprodnameCol;
+
     /**
      * The Price column for the Main Screen's Products Table.
      */
     @FXML
     private TableColumn<Product, Double> mainprodpriceCol;
+
     /**
      * The text field for the products search functionality.
      */
@@ -109,10 +121,6 @@ public class MainScreenController implements Initializable {
     public static Part getPart() {
         return part;
     }
-    //int index = partsTableView.getSelectionModel().getSelectedIndex();
-    //public static int getPartIndex{
-     //   return index;
-   // }
 
     /**
      * Gets the product object that is selected in the Products Table.
@@ -208,7 +216,6 @@ public class MainScreenController implements Initializable {
      * Deletes the selected part from the Parts Table.
      * Confirmation is required to make sure it wasn't an accident.
      */
-
     @FXML
     void onActionDeletePart(ActionEvent event) {
         if (partsTableView.getSelectionModel().isEmpty()){
@@ -226,6 +233,7 @@ public class MainScreenController implements Initializable {
     /**
      * Deletes the selected product from the Products Table.
      * Confirmation is required to make sure it wasn't an accident.
+     * Product with associated parts cannot be deleted.
      */
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
@@ -233,9 +241,15 @@ public class MainScreenController implements Initializable {
             showAlert(2);
             return;
         }
-        if (confirmAction("Warning!", "Would you like to delete this product?")){
+        Product productSelected = productsTableView.getSelectionModel().getSelectedItem();
+        if (productSelected.getAllAssociatedParts().isEmpty() == false) {
+            showAlert(5);
+        }
+        else{
+        if (confirmAction("Warning!", "Would you like to delete this product?")) {
             Product selectedProduct = productsTableView.getSelectionModel().getSelectedItem();
             Inventory.deleteProduct(selectedProduct);
+        }
         }
     }
 
@@ -244,7 +258,10 @@ public class MainScreenController implements Initializable {
      */
     @FXML
     void onActionExitProgram(ActionEvent event) {
+        if (MainScreenController.confirmAction("Cancel?", "Are you sure you want to exit the program?")) {
+
             System.exit(0);
+        }
     }
     /**
      * Takes user to Modify Part Screen.
@@ -263,6 +280,7 @@ public class MainScreenController implements Initializable {
             stage.show();
         }
     }
+
     /**
      * Takes user to Modify Product Screen.
      * Error message if no product was selected.
@@ -307,6 +325,7 @@ public class MainScreenController implements Initializable {
             }
         }
     }
+
     /**
      * When parts search text field is cleared by user, the table is
      * repopulated with all parts. User doesn't need to press enter.

@@ -3,6 +3,8 @@ package model;
 /**
  * The class used to create Parts that are manufactured by Outsourced companies.
  * Since it is a subtype of a Part object, it extends the Part Class.
+ *
+ * @author Nicholas Donnarumma
  */
 public class Outsourced extends Part{
 

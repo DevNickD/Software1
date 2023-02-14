@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 
 /**
  * This class is the Inventory that will contain all parts and products.
+ *
+ * @author Nicholas Donnarumma
  */
 public class Inventory {
 

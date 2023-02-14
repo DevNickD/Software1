@@ -31,91 +31,109 @@ import java.util.ResourceBundle;
  * @author Nicholas Donnarumma
  */
 public class AddProductController implements Initializable {
+
     /**
      * Table View for the Products table in the Add Product Screen.
      */
     @FXML
     private TableView<Part> productTableView;
+
     /**
      * The Inventory Level column for the Add Product Screen's Products Table.
      */
     @FXML
     private TableColumn<Part, Integer> addinvlevelCol;
+
     /**
      * The ID column for the Add Product Screen's Products Table.
      */
     @FXML
     private TableColumn<Part, Integer> addpartidCol;
+
     /**
      * The Name column for the Add Product Screen's Products Table.
      */
     @FXML
     private TableColumn<Part, String> addpartnameCol;
+
     /**
      * The Price column for the Add Product Screen's Products Table.
      */
     @FXML
     private TableColumn<Part, Double> addpriceCol;
+
     /**
      * The text field for the parts search functionality.
      */
     @FXML
     private TextField addproductSearch;
+
     /**
      * The product ID text field for user input.
      */
     @FXML
     private TextField addproductidTxt;
+
     /**
      * The product Inventory Level text field for user input.
      */
     @FXML
     private TextField addproductinvTxt;
+
     /**
      * The product Max text field for user input.
      */
     @FXML
     private TextField addproductmaxTxt;
+
     /**
      * The product Min text field for user input.
      */
     @FXML
     private TextField addproductminTxt;
+
     /**
      * The product Name text field for user input.
      */
     @FXML
     private TextField addproductnameTxt;
+
     /**
      * The product Price text field for user input.
      */
     @FXML
     private TextField addproductpriceTxt;
+
     /**
      * Table View for the Associated Parts table in the Add Product Screen.
      */
     @FXML
     private TableView<Part> associatedPartTableView;
+
     /**
      * The Inventory Level column for the Add Product Screen's Associated Parts Table.
      */
     @FXML
     private TableColumn<Part, Integer> removeinvlevelCol;
+
     /**
      * The ID column for the Add Product Screen's Associated Parts Table.
      */
     @FXML
     private TableColumn<Part, Integer> removepartidCol;
+
     /**
      * The Name column for the Add Product Screen's Associated Parts Table.
      */
     @FXML
     private TableColumn<Part, String> removepartnameCol;
+
     /**
      * The Price column for the Add Product Screen's Associated Parts Table.
      */
     @FXML
     private TableColumn<Part, Double> removepriceCol;
+
     /**
      * The new product object that is being created.
      */
@@ -158,9 +176,9 @@ public class AddProductController implements Initializable {
                 alert.showAndWait();
                 break;
             case 3:
-                alert.setTitle("Error");
-                alert.setHeaderText("Error Trying to Add Product");
-                alert.setContentText("Form cannot contain blank fields or invalid values.");
+                alert.setTitle("Error Trying to Add Product");
+                alert.setHeaderText("Form cannot contain blank fields or invalid values.");
+                alert.setContentText("Inventory, Max and Min must contain only whole numbers. Price must contain only whole numbers or a decimal number");
                 alert.showAndWait();
                 break;
             case 4:
@@ -217,13 +235,6 @@ public class AddProductController implements Initializable {
         return isValid;
     }
 
-    /**
-     * Adds part object selected in the all parts table to the associated parts table.
-     *
-     * Displays error message if no part is selected.
-     *
-     * @param event Add button action.
-     */
 
     /**
      * A search is executed to find parts with an id or name that matches the user's input.
@@ -291,6 +302,7 @@ public class AddProductController implements Initializable {
             stage.show();
         }
     }
+
     /**
      * Deletes the selected part from the Associated Parts Table.
      * Confirmation is required to make sure it wasn't an accident.
@@ -308,6 +320,7 @@ public class AddProductController implements Initializable {
             }
         }
     }
+
     /**
      * Adds a new product to the inventory then program goes back to Main Screen.
      * Error messages are displayed for incorrect inputs.

@@ -26,86 +26,103 @@ import java.util.ResourceBundle;
  * @author Nicholas Donnarumma
  */
 public class ModifyProductController implements Initializable {
+
     /**
      * The text field for the parts search functionality.
      */
     @FXML
     private TextField modproductSearch;
+
     /**
      * Table View for the Products table in the Modify Product Screen.
      */
     @FXML
     private TableView<Part> modprodaddTableView;
+
     /**
      * The Inventory Level column for the Modify Product Screen's Products Table.
      */
     @FXML
     private TableColumn<Part, Integer> modprodaddinvCol;
+
     /**
      * The ID column for the Add Product Screen's Products Table.
      */
     @FXML
     private TableColumn<Part, Integer> modprodaddpartidCol;
+
     /**
      * The Name column for the Add Product Screen's Products Table.
      */
     @FXML
     private TableColumn<Part, String> modprodaddpartnameCol;
+
     /**
      * The Price column for the Add Product Screen's Products Table.
      */
     @FXML
     private TableColumn<Part, Double> modprodaddpriceCol;
+
     /**
      * The product ID text field for user input.
      */
     @FXML
     private TextField modprodidTxt;
+
     /**
      * The product Inventory Level text field for user input.
      */
     @FXML
     private TextField modprodinvTxt;
+
     /**
      * The product Max text field for user input.
      */
     @FXML
     private TextField modprodmaxTxt;
+
     /**
      * The product Min text field for user input.
      */
     @FXML
     private TextField modprodminTxt;
+
     /**
      * The product Name text field for user input.
      */
     @FXML
     private TextField modprodnameTxt;
+
     /**
      * The product Price text field for user input.
      */
     @FXML
     private TextField modprodpriceTxt;
+
     /**
      * Table View for the Associated Parts table in the Modify Product Screen.
      */
     @FXML
     private TableView<Part> modprodremoveTableView;
+
     /**
      * The Inventory Level column for the Modify Product Screen's Associated Parts Table.
      */
     @FXML
     private TableColumn<Part, Integer> modprodremoveinvCol;
+
     /**
      * The ID column for the Modify Product Screen's Associated Parts Table.
      */
     @FXML
     private TableColumn<Part, Integer> modprodremovepartidCol;
+
     /**
      * The Name column for the Modify Product Screen's Associated Parts Table.
      */
     @FXML
     private TableColumn<Part, String> modprodremovepartnameCol;
+
     /**
      * The Price column for the Modify Product Screen's Associated Parts Table.
      */
@@ -122,6 +139,12 @@ public class ModifyProductController implements Initializable {
 
     /**
      * Displays different alert messages based on specific cases.
+     *
+     * Had an error one time because I forgot the break statement in case 4.
+     *
+     * The different errors were helpful with debugging when some methods didn't work and I
+     * received an error message from a branch that wasn't supposed to happen. It showed that
+     * the correct branch path wasn't taken.
      */
     private void showAlert(int alertType) {
 
@@ -142,9 +165,9 @@ public class ModifyProductController implements Initializable {
                 alert.showAndWait();
                 break;
             case 3:
-                alert.setTitle("Error");
-                alert.setHeaderText("Error Trying to Add Product");
-                alert.setContentText("Form cannot contain blank fields or invalid values.");
+                alert.setTitle("Error Trying to Add Product");
+                alert.setHeaderText("Form cannot contain blank fields or invalid values.");
+                alert.setContentText("Inventory, Max, Min must contain only whole numbers. Price must contain only whole numbers or a decimal number.");
                 alert.showAndWait();
                 break;
             case 4:
@@ -201,13 +224,6 @@ public class ModifyProductController implements Initializable {
         return isValid;
     }
 
-    /**
-     * Adds part object selected in the all parts table to the associated parts table.
-     *
-     * Displays error message if no part is selected.
-     *
-     * @param event Add button action.
-     */
 
     /**
      * A search is executed to find parts with an id or name that matches the user's input.
@@ -251,6 +267,8 @@ public class ModifyProductController implements Initializable {
     /**
      * Copies selected part object, from Add Product top table, and adds
      * it to the bottom associated parts table.
+     *
+     * Displays error message if no part is selected.
      */
     @FXML
     void onActionAddPart(ActionEvent event) {
@@ -302,7 +320,6 @@ public class ModifyProductController implements Initializable {
      */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
-
         try {
             int productIndex = Inventory.getAllProducts().indexOf(productSelected);
             int id = productSelected.getId();

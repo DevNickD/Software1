@@ -26,6 +26,7 @@ public class ModifyPartController implements Initializable {
      */
     @FXML
     private Label labelswap;
+
     /**
      * The part id text field for user input.
      * I copy and pasted this from AddPartController instead of from the
@@ -35,41 +36,49 @@ public class ModifyPartController implements Initializable {
      */
     @FXML
     private TextField modpartidTxt;
+
     /**
      * The radio button for In House parts.
      */
     @FXML
     private RadioButton modpartinhouse;
+
     /**
      * The part inventory level text field for user input.
      */
     @FXML
     private TextField modpartinvTxt;
+
     /**
      * The part machine ID text field for user input.
      */
     @FXML
     private TextField modpartmachineidTxt;
+
     /**
      * The part maximum level text field for user input.
      */
     @FXML
     private TextField modpartmaxTxt;
+
     /**
      * The part minimum level text field for user input.
      */
     @FXML
     private TextField modpartminTxt;
+
     /**
      * The part name text field for user input.
      */
     @FXML
     private TextField modpartnameTxt;
+
     /**
      * The radio button for Outsourced parts.
      */
     @FXML
     private RadioButton modpartoutsourced;
+
     /**
      * The part price text field for user input.
      */
@@ -93,9 +102,9 @@ public class ModifyPartController implements Initializable {
 
         switch (alertType) {
             case 1:
-                alert.setTitle("Error");
-                alert.setHeaderText("There is an error adding the part");
-                alert.setContentText("Form cannot contain empty fields or invalid values.");
+                alert.setTitle("There is an error adding the part");
+                alert.setHeaderText("Form cannot contain empty fields or invalid values.");
+                alert.setContentText("Inventory, Max, Min and Machine ID must contain only whole numbers. Price must contain only whole numbers or a decimal number.");
                 alert.showAndWait();
                 break;
             case 2:
@@ -190,48 +199,52 @@ public class ModifyPartController implements Initializable {
             String companyName;
             boolean partAddedSuccessfully = false;
 
-            if (minValidate(min, max) && inventoryValidate(min, max, stock)) {
+            if (name.isEmpty()) {
+                showAlert(5);
+            } else {
+                if (minValidate(min, max) && inventoryValidate(min, max, stock)) {
 
-                if (modpartinhouse.isSelected()) {
-                    try {
-                        machineId = Integer.parseInt(modpartmachineidTxt.getText());
-                        InHouse newInHousePart = new InHouse(0,"blank", 5,5,5,5,5);
-                        newInHousePart.setId(id);
-                        newInHousePart.setName(name);
-                        newInHousePart.setPrice(price);
-                        newInHousePart.setStock(stock);
-                        newInHousePart.setMin(min);
-                        newInHousePart.setMax(max);
-                        newInHousePart.setMachineId(machineId);
-                        Inventory.updatePart(partIndex, newInHousePart);
+                    if (modpartinhouse.isSelected()) {
+                        try {
+                            machineId = Integer.parseInt(modpartmachineidTxt.getText());
+                            InHouse newInHousePart = new InHouse(0, "blank", 5, 5, 5, 5, 5);
+                            newInHousePart.setId(id);
+                            newInHousePart.setName(name);
+                            newInHousePart.setPrice(price);
+                            newInHousePart.setStock(stock);
+                            newInHousePart.setMin(min);
+                            newInHousePart.setMax(max);
+                            newInHousePart.setMachineId(machineId);
+                            Inventory.updatePart(partIndex, newInHousePart);
+                            partAddedSuccessfully = true;
+                        } catch (Exception e) {
+                            showAlert(2);
+                        }
+                    }
+
+                    if (modpartoutsourced.isSelected()) {
+                        companyName = modpartmachineidTxt.getText();
+                        Outsourced newOutsourcedPart = new Outsourced(5, "blank", 5, 5, 5, 5, "name");
+                        newOutsourcedPart.setId(id);
+                        newOutsourcedPart.setName(name);
+                        newOutsourcedPart.setPrice(price);
+                        newOutsourcedPart.setStock(stock);
+                        newOutsourcedPart.setMin(min);
+                        newOutsourcedPart.setMax(max);
+                        newOutsourcedPart.setCompanyName(companyName);
+                        Inventory.updatePart(partIndex, newOutsourcedPart);
                         partAddedSuccessfully = true;
-                    } catch (Exception e) {
-                        showAlert(2);
+                    }
+
+                    if (partAddedSuccessfully) {
+
+                        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                        scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
+                        stage.setScene(new Scene(scene));
+                        stage.show();
                     }
                 }
-
-                if (modpartoutsourced.isSelected()) {
-                    companyName = modpartmachineidTxt.getText();
-                    Outsourced newOutsourcedPart = new Outsourced(5,"blank", 5,5,5,5, "name");
-                    newOutsourcedPart.setId(id);
-                    newOutsourcedPart.setName(name);
-                    newOutsourcedPart.setPrice(price);
-                    newOutsourcedPart.setStock(stock);
-                    newOutsourcedPart.setMin(min);
-                    newOutsourcedPart.setMax(max);
-                    newOutsourcedPart.setCompanyName(companyName);
-                    Inventory.updatePart(partIndex, newOutsourcedPart);
-                    partAddedSuccessfully = true;
-                }
-
-                if (partAddedSuccessfully) {
-
-                    stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-                    scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
-                    stage.setScene(new Scene(scene));
-                    stage.show();
-                }
-           }
+            }
         }
         catch(Exception e) {
             showAlert(1);

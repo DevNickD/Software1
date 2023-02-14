@@ -21,53 +21,62 @@ import java.util.ResourceBundle;
  *
  * @author Nicholas Donnarumma
  */
-
 public class AddPartController implements Initializable {
+
     /**
      * The label that gets swapped between machine ID and Company Name.
      */
     @FXML
     private Label labelswap;
+
     /**
      * The radio button for In House parts.
      */
     @FXML
     private RadioButton addpartinhouse;
+
     /**
      * The radio button for Outsourced parts.
      */
     @FXML
     private RadioButton addpartoutsourced;
+
     /**
      * The part id text field for user input.
      */
     @FXML
     private TextField partidTxt;
+
     /**
      * The part inventory level text field for user input.
      */
     @FXML
     private TextField partinvTxt;
+
     /**
      * The part machine ID text field for user input.
      */
     @FXML
     private TextField partmachineidTxt;
+
     /**
      * The part maximum level text field for user input.
      */
     @FXML
     private TextField partmaxTxt;
+
     /**
      * The part minimum level text field for user input.
      */
     @FXML
     private TextField partminTxt;
+
     /**
      * The part name text field for user input.
      */
     @FXML
     private TextField partnameTxt;
+
     /**
      * The part price text field for user input.
      */
@@ -99,9 +108,9 @@ public class AddPartController implements Initializable {
 
         switch (alertType) {
             case 1:
-                alert.setTitle("Error");
-                alert.setHeaderText("There is an error adding the part");
-                alert.setContentText("Form cannot contain empty fields or invalid values.");
+                alert.setTitle("There is an error adding the part");
+                alert.setHeaderText("Form cannot contain empty fields or invalid values.");
+                alert.setContentText("Inventory, Max, Min and Machine ID must contain only whole numbers. Price must contain only whole numbers or a decimal number.");
                 alert.showAndWait();
                 break;
             case 2:
