@@ -6,8 +6,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+/**
+ This class is or the Main Application.
+ It contains methods to load Main Screen and launch with sample data.
+ */
 public class InventoryApplication extends Application {
+    /**
+     * This start method is used to load the fxml for the Main screen.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(InventoryApplication.class.getResource("/view/MainScreen.fxml"));
@@ -16,7 +22,9 @@ public class InventoryApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * This main method is used to launch the application and fill the tables with sample data.
+     */
     public static void main(String[] args) {
 
         //Add Parts InHouse
