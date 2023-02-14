@@ -98,6 +98,8 @@ public class MainScreenController implements Initializable {
      */
     private static Product product;
 
+
+
     Stage stage;
     Parent scene;
 
@@ -107,6 +109,10 @@ public class MainScreenController implements Initializable {
     public static Part getPart() {
         return part;
     }
+    //int index = partsTableView.getSelectionModel().getSelectedIndex();
+    //public static int getPartIndex{
+     //   return index;
+   // }
 
     /**
      * Gets the product object that is selected in the Products Table.
@@ -210,8 +216,10 @@ public class MainScreenController implements Initializable {
             return;
         }
         if (confirmAction("Warning!", "Are you sure you would like to delete this part?")){
-            int selectedPart = partsTableView.getSelectionModel().getSelectedIndex();
-            partsTableView.getItems().remove(selectedPart);
+            //int selectedPart = partsTableView.getSelectionModel().getSelectedIndex();
+            Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
+            Inventory.deletePart(selectedPart);
+            //partsTableView.getItems().remove(selectedPart);
         }
     }
 
@@ -226,8 +234,8 @@ public class MainScreenController implements Initializable {
             return;
         }
         if (confirmAction("Warning!", "Would you like to delete this product?")){
-            int selectedPart = productsTableView.getSelectionModel().getSelectedIndex();
-            productsTableView.getItems().remove(selectedPart);
+            Product selectedProduct = productsTableView.getSelectionModel().getSelectedItem();
+            Inventory.deleteProduct(selectedProduct);
         }
     }
 
@@ -275,32 +283,30 @@ public class MainScreenController implements Initializable {
 
     /**
      * A search is executed to find parts with an id or name that matches the user's input.
-     * Name can be partial and it is case sensitive.
+     * Name can be partial and it isn't case sensitive.
      * Enter must be pressed for search to be executed.
      * After parts are found, table will show only those matching parts.
      * If no matching parts are found, an error message will be displayed.
      */
     @FXML
     void searchPart(ActionEvent event) {
-
-        ObservableList<Part> allParts = Inventory.getAllParts();
-        ObservableList<Part> partsFound = FXCollections.observableArrayList();
-        String searchPartInput = mainpartsSearch.getText();
-
-        for (Part part : allParts) {
-            if (String.valueOf(part.getId()).contains(searchPartInput) ||
-                    part.getName().contains(searchPartInput)) {
-                partsFound.add(part);
+        String searchPartName = mainpartsSearch.getText();
+        try {
+            int searchPartId = Integer.parseInt(searchPartName);
+            ObservableList<Part> idFound = FXCollections.observableArrayList();
+            idFound.add(Inventory.lookupPart(searchPartId));
+            partsTableView.setItems(idFound);
+            if (Inventory.lookupPart(searchPartId) == null) {
+                showAlert(3);
+            }
+        } catch (NumberFormatException nfe) {
+            ObservableList<Part> namesFound = Inventory.lookupPart(searchPartName);
+            partsTableView.setItems(namesFound);
+            if (namesFound.isEmpty()) {
+                showAlert(3);
             }
         }
-
-        partsTableView.setItems(partsFound);
-
-        if (partsFound.size() == 0) {
-            showAlert(3);
-        }
     }
-
     /**
      * When parts search text field is cleared by user, the table is
      * repopulated with all parts. User doesn't need to press enter.
@@ -314,29 +320,28 @@ public class MainScreenController implements Initializable {
 
     /**
      * A search is executed to find products with an id or name that matches the user's input.
-     * Name can be partial and it is case sensitive.
+     * Name can be partial and it isn't case sensitive.
      * Enter must be pressed for search to be executed.
      * After products are found, table will show only those matching products.
      * If no matching products are found, an error message will be displayed.
      */
     @FXML
     void searchProduct(ActionEvent event) {
-
-        ObservableList<Product> allProducts = Inventory.getAllProducts();
-        ObservableList<Product> productsFound = FXCollections.observableArrayList();
-        String searchProductInput = mainproductsSearch.getText();
-
-        for (Product product : allProducts) {
-            if (String.valueOf(product.getId()).contains(searchProductInput) ||
-                    product.getName().contains(searchProductInput)) {
-                productsFound.add(product);
+        String searchProductName = mainproductsSearch.getText();
+        try {
+            int searchProductId = Integer.parseInt(searchProductName);
+            ObservableList<Product> idFound = FXCollections.observableArrayList();
+            idFound.add(Inventory.lookupProduct(searchProductId));
+            productsTableView.setItems(idFound);
+            if (Inventory.lookupProduct(searchProductId) == null) {
+                showAlert(4);
             }
-        }
-
-        productsTableView.setItems(productsFound);
-
-        if (productsFound.size() == 0) {
-            showAlert(4);
+        } catch (NumberFormatException nfe) {
+            ObservableList<Product> namesFound = Inventory.lookupProduct(searchProductName);
+            productsTableView.setItems(namesFound);
+            if (namesFound.isEmpty()) {
+                showAlert(4);
+            }
         }
     }
 

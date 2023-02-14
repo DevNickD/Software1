@@ -30,7 +30,7 @@ public class ModifyProductController implements Initializable {
      * The text field for the parts search functionality.
      */
     @FXML
-    private TextField modprodSearch;
+    private TextField modproductSearch;
     /**
      * Table View for the Products table in the Modify Product Screen.
      */
@@ -111,10 +111,7 @@ public class ModifyProductController implements Initializable {
      */
     @FXML
     private TableColumn<Part, Double> modprodremovepriceCol;
-    /**
-     * A list containing the product's Associated Parts.
-     */
-    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+
     /**
      * The product object selected in the MainScreenController.
      */
@@ -214,29 +211,28 @@ public class ModifyProductController implements Initializable {
 
     /**
      * A search is executed to find parts with an id or name that matches the user's input.
-     * Name can be partial and it is case sensitive.
+     * Name can be partial and it isn't case sensitive.
      * Enter must be pressed for search to be executed.
      * After parts are found, table will show only those matching parts.
      * If no matching parts are found, an error message will be displayed.
      */
     @FXML
     void searchPart(ActionEvent event) {
-
-        ObservableList<Part> allParts = Inventory.getAllParts();
-        ObservableList<Part> partsFound = FXCollections.observableArrayList();
-        String searchPartInput = modprodSearch.getText();
-
-        for (Part part : allParts) {
-            if (String.valueOf(part.getId()).contains(searchPartInput) ||
-                    part.getName().contains(searchPartInput)) {
-                partsFound.add(part);
+        String searchPartName = modproductSearch.getText();
+        try {
+            int searchPartId = Integer.parseInt(searchPartName);
+            ObservableList<Part> idFound = FXCollections.observableArrayList();
+            idFound.add(Inventory.lookupPart(searchPartId));
+            modprodaddTableView.setItems(idFound);
+            if (Inventory.lookupPart(searchPartId) == null) {
+                showAlert(4);
             }
-        }
-
-        modprodaddTableView.setItems(partsFound);
-
-        if (partsFound.size() == 0) {
-            showAlert(3);
+        } catch (NumberFormatException nfe) {
+            ObservableList<Part> namesFound = Inventory.lookupPart(searchPartName);
+            modprodaddTableView.setItems(namesFound);
+            if (namesFound.isEmpty()) {
+                showAlert(4);
+            }
         }
     }
 
@@ -246,7 +242,7 @@ public class ModifyProductController implements Initializable {
      */
     @FXML
     void partSearchCleared(KeyEvent event) {
-        if (modprodSearch.getText().isEmpty()) {
+        if (modproductSearch.getText().isEmpty()) {
             modprodaddTableView.setItems(Inventory.getAllParts());
         }
     }
@@ -263,8 +259,7 @@ public class ModifyProductController implements Initializable {
         if (partSelected == null) {
             showAlert(6);
        } else {
-            associatedParts.add(partSelected);
-            modprodremoveTableView.setItems(associatedParts);
+            productSelected.addAssociatedPart(partSelected);
         }
     }
 
@@ -292,8 +287,9 @@ public class ModifyProductController implements Initializable {
             showAlert(5);
         } else {
             if (MainScreenController.confirmAction("Warning!", "Are you sure you would like to delete this part?")) {
-                int selectedPart = modprodremoveTableView.getSelectionModel().getSelectedIndex();
-                modprodremoveTableView.getItems().remove(selectedPart);
+                Part selectedAssociatedPart = modprodremoveTableView.getSelectionModel().getSelectedItem();
+                productSelected.deleteAssociatedPart(selectedAssociatedPart);
+
             }
         }
 
@@ -306,49 +302,10 @@ public class ModifyProductController implements Initializable {
      */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
-        /*
-        int productIndex = Inventory.getAllProducts().
-                indexOf(productSelected);
-
-        // Gathering form data
-        String productName = modprodnameTxt.getText();
-        int productID = Integer.parseInt(modprodidTxt.getText());
-        int productInventory = Integer.parseInt(modprodinvTxt.getText());
-        double productPrice = Double.parseDouble(modprodpriceTxt.getText());
-        int productMax = Integer.parseInt(modprodmaxTxt.getText());
-        int productMin = Integer.parseInt(modprodminTxt.getText());
-        // How many Parts are associated with this Product?
-        int associatedPartArraySize = productSelected.getAllAssociatedParts().size();
-        // No Associated Parts found for this Product
-        if(associatedPartArraySize == 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("No Associated Part Found");
-            alert.setHeaderText("Products must have Parts.");
-            alert.setContentText(
-                    "Please Add a Part to this Product before Saving");
-            alert.show();
-        }
-        else {
-            // Setting the new Product values
-            productSelected.setId(productID);
-            productSelected.setName(productName);
-            productSelected.setStock(productInventory);
-            productSelected.setPrice(productPrice);
-            productSelected.setMax(productMax);
-            productSelected.setMin(productMin);
-
-
-            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
-            stage.setScene(new Scene(scene));
-            stage.show();
-        }
-        */
 
         try {
-
+            int productIndex = Inventory.getAllProducts().indexOf(productSelected);
             int id = productSelected.getId();
-           // int id = Integer.parseInt(modprodidTxt.getText());
             String name = modprodnameTxt.getText();
             Double price = Double.parseDouble(modprodpriceTxt.getText());
             int stock = Integer.parseInt(modprodinvTxt.getText());
@@ -361,14 +318,19 @@ public class ModifyProductController implements Initializable {
             } else {
                 if (minValidate(min, max) && inventoryValidate(min, max, stock)) {
 
-                    Product newProduct = new Product(id, name, price, stock, min, max);
+                    Product newProduct = new Product(1, "blank", 1, 1, 1, 1);
+                    newProduct.setId(id);
+                    newProduct.setName(name);
+                    newProduct.setPrice(price);
+                    newProduct.setStock(stock);
+                    newProduct.setMin(min);
+                    newProduct.setMax(max);
 
-                    for (Part associatedPart : associatedParts) {
+                    for (Part associatedPart : productSelected.getAllAssociatedParts()) {
                         newProduct.addAssociatedPart(associatedPart);
-                    }
+                   }
 
-                    Inventory.addProduct(newProduct);
-                    Inventory.deleteProduct(productSelected);
+                    Inventory.updateProduct(productIndex, newProduct);
                     stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                     scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
                     stage.setScene(new Scene(scene));
@@ -386,9 +348,6 @@ public class ModifyProductController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        //Product product = Inventory.getAllProducts().get(productIndex);
-        //productID = getProductInventory().get(productIndex).getProductID();
 
         productSelected = MainScreenController.getProduct();
 

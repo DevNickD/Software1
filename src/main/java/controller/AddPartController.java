@@ -74,6 +74,19 @@ public class AddPartController implements Initializable {
     @FXML
     private TextField partpriceTxt;
 
+    /**
+     * An ID for a part. Variable used for unique part IDs.
+     */
+    private static int partId = 0;
+
+    /**
+     * Generates a new Part ID.
+     */
+
+    public static int getNewPartId() {
+        return ++partId;
+    }
+
     Stage stage;
     Parent scene;
 
@@ -199,7 +212,7 @@ public class AddPartController implements Initializable {
             int max = Integer.parseInt(partmaxTxt.getText());
             int machineId;
             String companyName;
-            boolean partAddSuccessful = false;
+            boolean partAddedSuccessfully = false;
 
             if (name.isEmpty()) {
                 showAlert(5);
@@ -210,9 +223,9 @@ public class AddPartController implements Initializable {
                         try {
                             machineId = Integer.parseInt(partmachineidTxt.getText());
                             InHouse newInHousePart = new InHouse(id, name, price, stock, min, max, machineId);
-                            newInHousePart.setId(Inventory.getNewPartId());
+                            newInHousePart.setId(getNewPartId());
                             Inventory.addPart(newInHousePart);
-                            partAddSuccessful = true;
+                            partAddedSuccessfully = true;
                         } catch (Exception e) {
                             showAlert(2);
                         }
@@ -222,12 +235,12 @@ public class AddPartController implements Initializable {
                         companyName = partmachineidTxt.getText();
                         Outsourced newOutsourcedPart = new Outsourced(id, name, price, stock, min, max,
                                 companyName);
-                        newOutsourcedPart.setId(Inventory.getNewPartId());
+                        newOutsourcedPart.setId(getNewPartId());
                         Inventory.addPart(newOutsourcedPart);
-                        partAddSuccessful = true;
+                        partAddedSuccessfully = true;
                     }
 
-                    if (partAddSuccessful) {
+                    if (partAddedSuccessfully) {
                         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                         scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
                         stage.setScene(new Scene(scene));

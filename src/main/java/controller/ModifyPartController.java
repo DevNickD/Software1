@@ -8,10 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.InHouse;
-import model.Inventory;
-import model.Outsourced;
-import model.Part;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,11 +20,6 @@ import java.util.ResourceBundle;
  * @author Nicholas Donnarumma
  */
 public class ModifyPartController implements Initializable {
-
-    /**
-     * The part object that is selected.
-     */
-    private Part partSelected;
 
     /**
      * The label that gets swapped between machine ID and Company Name.
@@ -83,6 +75,11 @@ public class ModifyPartController implements Initializable {
      */
     @FXML
     private TextField modpartpriceTxt;
+
+    /**
+     * The part object that is selected.
+     */
+    private Part partSelected;
 
     Stage stage;
     Parent scene;
@@ -181,6 +178,8 @@ public class ModifyPartController implements Initializable {
     @FXML
     void onActionSaveModifyForm(ActionEvent event) throws IOException {
         try {
+            // Get the index of the selected Part
+            int partIndex = Inventory.getAllParts().indexOf(partSelected);
             int id = partSelected.getId();
             String name = modpartnameTxt.getText();
             Double price = Double.parseDouble(modpartpriceTxt.getText());
@@ -196,8 +195,15 @@ public class ModifyPartController implements Initializable {
                 if (modpartinhouse.isSelected()) {
                     try {
                         machineId = Integer.parseInt(modpartmachineidTxt.getText());
-                        InHouse newInHousePart = new InHouse(id, name, price, stock, min, max, machineId);
-                        Inventory.addPart(newInHousePart);
+                        InHouse newInHousePart = new InHouse(0,"blank", 5,5,5,5,5);
+                        newInHousePart.setId(id);
+                        newInHousePart.setName(name);
+                        newInHousePart.setPrice(price);
+                        newInHousePart.setStock(stock);
+                        newInHousePart.setMin(min);
+                        newInHousePart.setMax(max);
+                        newInHousePart.setMachineId(machineId);
+                        Inventory.updatePart(partIndex, newInHousePart);
                         partAddedSuccessfully = true;
                     } catch (Exception e) {
                         showAlert(2);
@@ -206,21 +212,26 @@ public class ModifyPartController implements Initializable {
 
                 if (modpartoutsourced.isSelected()) {
                     companyName = modpartmachineidTxt.getText();
-                    Outsourced newOutsourcedPart = new Outsourced(id, name, price, stock, min, max,
-                            companyName);
-                    Inventory.addPart(newOutsourcedPart);
+                    Outsourced newOutsourcedPart = new Outsourced(5,"blank", 5,5,5,5, "name");
+                    newOutsourcedPart.setId(id);
+                    newOutsourcedPart.setName(name);
+                    newOutsourcedPart.setPrice(price);
+                    newOutsourcedPart.setStock(stock);
+                    newOutsourcedPart.setMin(min);
+                    newOutsourcedPart.setMax(max);
+                    newOutsourcedPart.setCompanyName(companyName);
+                    Inventory.updatePart(partIndex, newOutsourcedPart);
                     partAddedSuccessfully = true;
                 }
 
                 if (partAddedSuccessfully) {
-                    Inventory.deletePart(partSelected);
 
                     stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
                     scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
                     stage.setScene(new Scene(scene));
                     stage.show();
                 }
-            }
+           }
         }
         catch(Exception e) {
             showAlert(1);

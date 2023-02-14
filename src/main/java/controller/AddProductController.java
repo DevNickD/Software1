@@ -117,28 +117,25 @@ public class AddProductController implements Initializable {
     @FXML
     private TableColumn<Part, Double> removepriceCol;
     /**
-     * A list containing the product's Associated Parts.
+     * The new product object that is being created.
      */
-    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    private Product newProduct;
+
+    /**
+     * An ID for a product. Variable used for unique product IDs.
+     */
+    private static int productId = 0;
+
+    /**
+     * Generates a new Product ID.
+     */
+    public static int getNewProductId() {
+        return ++productId;
+    }
 
     Stage stage;
     Parent scene;
 
-    /**
-     * Copies selected part object, from Add Product top table, and adds
-     * it to the bottom associated parts table.
-     */
-    @FXML
-    void onActionAddPart(ActionEvent event) {
-        Part partSelected = productTableView.getSelectionModel().getSelectedItem();
-
-        if (partSelected == null) {
-            showAlert(6);
-        } else {
-            associatedParts.add(partSelected);
-            associatedPartTableView.setItems(associatedParts);
-        }
-    }
     /**
      * Displays different alert messages based on specific cases.
      */
@@ -230,29 +227,28 @@ public class AddProductController implements Initializable {
 
     /**
      * A search is executed to find parts with an id or name that matches the user's input.
-     * Name can be partial and it is case sensitive.
+     * Name can be partial and it isn't case sensitive.
      * Enter must be pressed for search to be executed.
      * After parts are found, table will show only those matching parts.
      * If no matching parts are found, an error message will be displayed.
      */
     @FXML
     void searchPart(ActionEvent event) {
-
-        ObservableList<Part> allParts = Inventory.getAllParts();
-        ObservableList<Part> partsFound = FXCollections.observableArrayList();
-        String searchPartInput = addproductSearch.getText();
-
-        for (Part part : allParts) {
-            if (String.valueOf(part.getId()).contains(searchPartInput) ||
-                    part.getName().contains(searchPartInput)) {
-                partsFound.add(part);
+        String searchPartName = addproductSearch.getText();
+        try {
+            int searchPartId = Integer.parseInt(searchPartName);
+            ObservableList<Part> idFound = FXCollections.observableArrayList();
+            idFound.add(Inventory.lookupPart(searchPartId));
+            productTableView.setItems(idFound);
+            if (Inventory.lookupPart(searchPartId) == null) {
+                showAlert(4);
             }
-        }
-
-        productTableView.setItems(partsFound);
-
-        if (partsFound.size() == 0) {
-            showAlert(3);
+        } catch (NumberFormatException nfe) {
+            ObservableList<Part> namesFound = Inventory.lookupPart(searchPartName);
+            productTableView.setItems(namesFound);
+            if (namesFound.isEmpty()) {
+                showAlert(4);
+            }
         }
     }
 
@@ -264,6 +260,22 @@ public class AddProductController implements Initializable {
     void partSearchCleared(KeyEvent event) {
         if (addproductSearch.getText().isEmpty()) {
             productTableView.setItems(Inventory.getAllParts());
+        }
+    }
+
+    /**
+     * Copies selected part object, from Add Product top table, and adds
+     * it to the bottom associated parts table.
+     */
+    @FXML
+    void onActionAddPart(ActionEvent event) {
+        Part partSelected = productTableView.getSelectionModel().getSelectedItem();
+
+        if (partSelected == null) {
+            showAlert(6);
+        } else {
+            newProduct.addAssociatedPart(partSelected);
+
         }
     }
 
@@ -291,8 +303,8 @@ public class AddProductController implements Initializable {
         }
         else {
             if (MainScreenController.confirmAction("Warning!", "Are you sure you would like to delete this part?")){
-                int selectedPart = associatedPartTableView.getSelectionModel().getSelectedIndex();
-                associatedPartTableView.getItems().remove(selectedPart);
+                Part selectedAssociatedPart  = associatedPartTableView.getSelectionModel().getSelectedItem();
+                newProduct.deleteAssociatedPart(selectedAssociatedPart);
             }
         }
     }
@@ -317,13 +329,19 @@ public class AddProductController implements Initializable {
             else {
                 if (minValidate(min, max) && inventoryValidate(min, max, stock)) {
 
-                    Product newProduct = new Product(id, name, price, stock, min, max);
+                    Product newProduct = new Product(1, "blank", 1, 1, 1, 1);
+                    newProduct.setId(id);
+                    newProduct.setName(name);
+                    newProduct.setPrice(price);
+                    newProduct.setStock(stock);
+                    newProduct.setMin(min);
+                    newProduct.setMax(max);
 
-                    for (Part part : associatedParts) {
-                        newProduct.addAssociatedPart(part);
+                    for (Part associatedPart : newProduct.getAllAssociatedParts()) {
+                        newProduct.addAssociatedPart(associatedPart);
                     }
 
-                    newProduct.setId(Inventory.getNewProductId());
+                    newProduct.setId(getNewProductId());
                     Inventory.addProduct(newProduct);
                     stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                     scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
@@ -344,6 +362,9 @@ public class AddProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        newProduct = new Product(1,"blank",1,1,1,1);
+
+
         //Table and Columns parts that aren't associated
         productTableView.setItems(Inventory.getAllParts());
         addpartidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -356,6 +377,6 @@ public class AddProductController implements Initializable {
         removepartnameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         removeinvlevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         removepriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
+        associatedPartTableView.setItems(newProduct.getAllAssociatedParts());
     }
 }
