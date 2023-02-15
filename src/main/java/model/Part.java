@@ -4,7 +4,7 @@ package model;
          */
 
         /**
-         *
+         * The abstract class to be inherited to be used for creating In-House or Outsourced parts
          * @author Nicholas Donnarumma
          */
         public abstract class Part {

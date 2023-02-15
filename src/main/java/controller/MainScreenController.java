@@ -131,6 +131,7 @@ public class MainScreenController implements Initializable {
 
     /**
      * Displays different alert messages based on specific cases
+     *
      * @param alertType the variable for which case gets executed and has it's error message displayed
      */
     private void showAlert(int alertType) {
@@ -171,6 +172,7 @@ public class MainScreenController implements Initializable {
 
     /**
      * Method for confirming if user really wants to delete or cancel
+     *
      * @return true if OK button is clicked (action is confirmed) or false if cancel is chosen
      */
     public static boolean confirmAction(String title, String content){
@@ -189,6 +191,7 @@ public class MainScreenController implements Initializable {
 
     /**
      * Takes the user to the Add Part Screen
+     *
      * @param event the event to be executed when the Add button is clicked below Parts Table
      */
     @FXML
@@ -204,6 +207,7 @@ public class MainScreenController implements Initializable {
 
     /**
      * Takes the user to the Add Product Screen
+     *
      * @param event the event to be executed when the Add button is clicked below Products Table
      */
     @FXML

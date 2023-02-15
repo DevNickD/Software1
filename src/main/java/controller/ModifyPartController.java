@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller class that adds functionality to the Modify Part Screen.
+ * Controller class that adds functionality to the Modify Part Screen
  *
  * @author Nicholas Donnarumma
  */
@@ -173,9 +173,12 @@ public class ModifyPartController implements Initializable {
 
     /**
      * Sets swappable label to "Machine ID".
-     *
-     * Label wouldn't change and couldn't figure out why for some time. Then I realized
-     * I never saved the action event modInHouseSelected in the ModifyPart.fxml file.
+     * RUNTIME ERROR
+     * A third error was an error related to JavaFX  In the Modify Part Screen of the Application I
+     * couldn't get the labels to swap based on radio button selection even though the logic seemed
+     * correct for the method  I was confused for a while but the I decided to double check the fxml
+     * file and noticed I never saved the action event modInHouseSelected in the ModifyPart.fxml file
+     * The onAction field was just blank then it all made sense to me
      *
      * I also forgot to give the label a fx:id in ModifyPart/fxml because I thought I
      * added it after I gave the label in AddPart.fxml an fx:id.
@@ -226,6 +229,11 @@ public class ModifyPartController implements Initializable {
      * Modifies part in inventory based on changes made then program returns to the Main Screen.
      * Error messages are displayed for incorrect inputs.
      * The fields are validated to prevent empty and/or invalid values.
+     * RUNTIME ERROR
+     * One more error I remember having was that the name field is blank message appeared on all Screens
+     * except the Modify Part Screen  I forgot to add a branch statement to implement that functionality
+     * Even though the alert functionality existed in the alert method, I wasn't making use of it in the
+     * onActionSave Method
      *
      * @param event the event that executes when the save button is clicked on the Modify Part Screen
      */

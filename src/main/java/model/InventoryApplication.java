@@ -6,46 +6,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
 /**
  * This class is for loading the Application
- * It contains methods to load Main Screen and launch with sample data
  *
  * @author Nicholas Donnarumma
  */
 public class InventoryApplication extends Application {
     /**
      * This start method is used to load the fxml for the Main screen
-     *
-     * The application is useful but could use some future enhancements to extend functionality
-     * One enhancement would be to add a button to the main screen product table that will
-     * remove all associated parts from a product. That way, the user won't need to select
-     * the modify button, go to a new screen and remove the parts one by one.
-     *
-     * Another enhancement that can be done is the ability to select and add multiple parts
-     * from the top table in the Add Product and Modify Product Screens. If a product contains
-     * a large amount of associated parts then it will be very tedious to have to add the parts
-     * to the product one at a time.
-     *
-     * Some Errors occurred during the project. One error was that associated parts were able to be
-     * added to the bottom table in the Add Product and Modify Product Screens. However, after saving
-     * and returning to the product to modify, the associated parts weren't showing up. I realized my
-     * code needed to be changed because I was just adding parts to the tableview but there was no code
-     * implemented for the product itself to add the associated parts to it's Observable List.
-     *
-     * Another Error from a simple mistake occurred when I had a missing break statement from case 4 in
-     * the Modify Product Controller. This caused a second alert messages to display after the first one
-     * which wasn't supposed to happen.
-     *
-     * A third error was an error related to JavaFX. In the Modify Part Screen of the Application I
-     * couldn't get the labels to swap based on radio button selection even though the logic seemed
-     * correct for the method. I was confused for a while but the I decided to double check the fxml
-     * file and noticed I never saved the action event modInHouseSelected in the ModifyPart.fxml file.
-     * The onAction field was just blank then it all made sense to me.
-     *
-     * One more error I remember having was that the name field is blank message appeared on all Screens
-     * except the Modify Part Screen. I forgot to add a branch statement to implement that functionality.
-     * Even though the alert functionality existed in the alert method, I wasn't making use of it in the
-     * onActionSave Method.
      */
     @Override
     public void start(Stage stage) throws IOException {
@@ -57,6 +26,17 @@ public class InventoryApplication extends Application {
     }
     /**
      * This main method is used to launch the application and fill the tables with sample data
+     * Javadocs will be in separate zip file path is file:///C:/Users/Nick/Documents/javadoc/kinkead.firstscreen/module-summary.html
+     * FUTURE ENHANCEMENT
+     * The application is useful but could use some future enhancements to extend functionality
+     * One enhancement would be to add a button to the main screen product table that will
+     * remove all associated parts from a product That way, the user won't need to select
+     * the modify button, go to a new screen and remove the parts one by one
+     * FUTURE ENHANCEMENT
+     * Another enhancement that can be done is the ability to select and add multiple parts
+     * from the top table in the Add Product and Modify Product Screens If a product contains
+     * a large amount of associated parts then it will be very tedious to have to add the parts
+     * to the product one at a time
      */
     public static void main(String[] args) {
 

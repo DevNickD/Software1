@@ -2,7 +2,6 @@ package model;
 
 /**
  * The class used to create Parts that are manufactured In-House
- * Since it is a subtype of a Part object, it extends the Part Class
  *
  * @author Nicholas Donnarumma
  */
@@ -14,8 +13,8 @@ public class InHouse extends Part{
     private int machineId;
 
     /**
-     * The Constructor for the InHouse class
-     * An id, name, price, stock, minimum stock, maximum stock and machineId is required
+     * The Constructor for the InHouse class.
+     * An id, name, price, stock, minimum stock, maximum stock and machineId is required.
      */
     public InHouse(int id, String name, double price, int stock, int min, int max, int machineId){
         super(id, name, price, stock, min, max);

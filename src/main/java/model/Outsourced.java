@@ -2,7 +2,6 @@ package model;
 
 /**
  * The class used to create Parts that are manufactured by Outsourced companies
- * Since it is a subtype of a Part object, it extends the Part Class
  *
  * @author Nicholas Donnarumma
  */
@@ -14,8 +13,8 @@ public class Outsourced extends Part{
     private String companyName;
 
     /**
-     * The Constructor for the Outsourced class
-     * An id, name, price, stock, minimum stock, maximum stock and company name is required
+     * The Constructor for the Outsourced class.
+     * An id, name, price, stock, minimum stock, maximum stock and company name is required.
      */
     public Outsourced(int id, String name, double price, int stock, int min, int max, String companyName){
         super(id, name, price, stock, min, max);

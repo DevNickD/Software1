@@ -139,12 +139,10 @@ public class ModifyProductController implements Initializable {
 
     /**
      * Displays different alert messages based on specific cases
-     *
-     * Had an error one time because I forgot the break statement in case 4
-     *
-     * The different errors were helpful with debugging when some methods didn't work and I
-     * received an error message from a branch that wasn't supposed to happen. It showed that
-     * the correct branch path wasn't taken.
+     * RUNTIME ERROR
+     * Error from a simple mistake occurred when I had a missing break statement from case 4 in
+     * the Modify Product Controller  This caused a second alert messages to display after the first one
+     * which wasn't supposed to happen
      *
      * @param alertType the variable for which case gets executed and has it's error message displayed
      */
@@ -276,6 +274,12 @@ public class ModifyProductController implements Initializable {
     /**
      * Copies selected part object, from Add Product top table, and adds it to the bottom associated parts table
      * Displays error message if no part is selected
+     * RUNTIME ERROR
+     * Some Errors occurred during the project  One error was that associated parts were able to be
+     * added to the bottom table in the Add Product and Modify Product Screens  However, after saving
+     * and returning to the product to modify, the associated parts weren't showing up  I realized my
+     * code needed to be changed because I was just adding parts to the tableview but there was no code
+     * implemented for the product itself to add the associated parts to it's Observable List
      *
      * @param event the event to be executed when the Add button is clicked on the Modify Product Screen
      */
@@ -330,6 +334,12 @@ public class ModifyProductController implements Initializable {
      * Adds a new product to the inventory then program goes back to Main Screen
      * Error messages are displayed for incorrect inputs
      * The fields are validated to prevent empty and/or invalid values
+     * RUNTIME ERROR
+     * Some Errors occurred during the project. One error was that associated parts were able to be
+     * added to the bottom table in the Add Product and Modify Product Screens  However, after saving
+     * and returning to the product to modify, the associated parts weren't showing up  I realized my
+     * code needed to be changed because I was just adding parts to the tableview but there was no code
+     * implemented for the product itself to add the associated parts to it's Observable List
      *
      * @param event the event to be executed when the Save button is clicked on the Modify Product Screen
      */
