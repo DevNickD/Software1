@@ -26,126 +26,128 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller class that adds functionality to the Add Product Screen.
+ * Controller class that adds functionality to the Add Product Screen
  *
  * @author Nicholas Donnarumma
  */
 public class AddProductController implements Initializable {
 
     /**
-     * Table View for the Products table in the Add Product Screen.
+     * Table View for the Products table in the Add Product Screen
      */
     @FXML
     private TableView<Part> productTableView;
 
     /**
-     * The Inventory Level column for the Add Product Screen's Products Table.
+     * The Inventory Level column for the Add Product Screen's Products Table
      */
     @FXML
     private TableColumn<Part, Integer> addinvlevelCol;
 
     /**
-     * The ID column for the Add Product Screen's Products Table.
+     * The ID column for the Add Product Screen's Products Table
      */
     @FXML
     private TableColumn<Part, Integer> addpartidCol;
 
     /**
-     * The Name column for the Add Product Screen's Products Table.
+     * The Name column for the Add Product Screen's Products Table
      */
     @FXML
     private TableColumn<Part, String> addpartnameCol;
 
     /**
-     * The Price column for the Add Product Screen's Products Table.
+     * The Price column for the Add Product Screen's Products Table
      */
     @FXML
     private TableColumn<Part, Double> addpriceCol;
 
     /**
-     * The text field for the parts search functionality.
+     * The text field for the parts search functionality
      */
     @FXML
     private TextField addproductSearch;
 
     /**
-     * The product ID text field for user input.
+     * The product ID text field for user input
      */
     @FXML
     private TextField addproductidTxt;
 
     /**
-     * The product Inventory Level text field for user input.
+     * The product Inventory Level text field for user input
      */
     @FXML
     private TextField addproductinvTxt;
 
     /**
-     * The product Max text field for user input.
+     * The product Max text field for user input
      */
     @FXML
     private TextField addproductmaxTxt;
 
     /**
-     * The product Min text field for user input.
+     * The product Min text field for user input
      */
     @FXML
     private TextField addproductminTxt;
 
     /**
-     * The product Name text field for user input.
+     * The product Name text field for user input
      */
     @FXML
     private TextField addproductnameTxt;
 
     /**
-     * The product Price text field for user input.
+     * The product Price text field for user input
      */
     @FXML
     private TextField addproductpriceTxt;
 
     /**
-     * Table View for the Associated Parts table in the Add Product Screen.
+     * Table View for the Associated Parts table in the Add Product Screen
      */
     @FXML
     private TableView<Part> associatedPartTableView;
 
     /**
-     * The Inventory Level column for the Add Product Screen's Associated Parts Table.
+     * The Inventory Level column for the Add Product Screen's Associated Parts Table
      */
     @FXML
     private TableColumn<Part, Integer> removeinvlevelCol;
 
     /**
-     * The ID column for the Add Product Screen's Associated Parts Table.
+     * The ID column for the Add Product Screen's Associated Parts Table
      */
     @FXML
     private TableColumn<Part, Integer> removepartidCol;
 
     /**
-     * The Name column for the Add Product Screen's Associated Parts Table.
+     * The Name column for the Add Product Screen's Associated Parts Table
      */
     @FXML
     private TableColumn<Part, String> removepartnameCol;
 
     /**
-     * The Price column for the Add Product Screen's Associated Parts Table.
+     * The Price column for the Add Product Screen's Associated Parts Table
      */
     @FXML
     private TableColumn<Part, Double> removepriceCol;
 
     /**
-     * The new product object that is being created.
+     * The new product object that is being created
      */
     private Product newProduct;
 
     /**
-     * An ID for a product. Variable used for unique product IDs.
+     * An ID for a product. Variable used for unique product IDs
      */
     private static int productId = 0;
 
     /**
      * Generates a new Product ID.
+     *
+     * @return product id after it is incremented by 1
      */
     public static int getNewProductId() {
         return ++productId;
@@ -155,7 +157,9 @@ public class AddProductController implements Initializable {
     Parent scene;
 
     /**
-     * Displays different alert messages based on specific cases.
+     * Displays different alert messages based on specific cases
+     *
+     * @param alertType the variable for which case gets executed and has it's error message displayed
      */
     private void showAlert(int alertType) {
 
@@ -206,7 +210,9 @@ public class AddProductController implements Initializable {
     }
 
     /**
-     * Validates that inventory level is equal to or between minimum and maximum inventory level.
+     * Validates that inventory level is equal to or between minimum and maximum inventory level
+     *
+     * @return isValid/true if inventory level is between the minimum and maximum inventory level
      */
     private boolean inventoryValidate(int min, int max, int stock) {
 
@@ -221,7 +227,9 @@ public class AddProductController implements Initializable {
     }
 
     /**
-     * Validates that min is a number greater than 0 and less than max.
+     * Validates that min is a number greater than 0 and less than max
+     *
+     * @return isValid/true if minimum inventory level is greater than 0 and less than max
      */
     private boolean minValidate(int min, int max) {
 
@@ -237,11 +245,13 @@ public class AddProductController implements Initializable {
 
 
     /**
-     * A search is executed to find parts with an id or name that matches the user's input.
-     * Name can be partial and it isn't case sensitive.
-     * Enter must be pressed for search to be executed.
-     * After parts are found, table will show only those matching parts.
-     * If no matching parts are found, an error message will be displayed.
+     * A search is executed to find parts with an id or name that matches the user's input
+     * Name can be partial and it isn't case sensitive
+     * Enter must be pressed for search to be executed
+     * After parts are found, table will show only those matching parts
+     * If no matching parts are found, an error message will be displayed
+     *
+     * @param event the event to be executed when the Part Table's Search Field is filled and entered
      */
     @FXML
     void searchPart(ActionEvent event) {
@@ -264,8 +274,9 @@ public class AddProductController implements Initializable {
     }
 
     /**
-     * When parts search text field is cleared by user, the table is
-     * repopulated with all parts. User doesn't need to press enter.
+     * When parts search text field is cleared by user, the table is repopulated with all parts. User doesn't need to press enter
+     *
+     * @param event the event to be executed after a Part search was executed and the user clears the text in search field
      */
     @FXML
     void partSearchCleared(KeyEvent event) {
@@ -275,8 +286,9 @@ public class AddProductController implements Initializable {
     }
 
     /**
-     * Copies selected part object, from Add Product top table, and adds
-     * it to the bottom associated parts table.
+     * Copies selected part object, from Add Product top table, and adds it to the bottom associated parts table
+     *
+     * @param event the event to be executed when the Add button is clicked on the Add Product Screen
      */
     @FXML
     void onActionAddPart(ActionEvent event) {
@@ -291,7 +303,9 @@ public class AddProductController implements Initializable {
     }
 
     /**
-     * Displays confirmation alert to make sure user wants to cancel and go back to Main Screen.
+     * Displays confirmation alert to make sure user wants to cancel and go back to Main Screen
+     *
+     * @param event the event to be executed when the Cancel button is clicked on the Add Product Screen
      */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
@@ -304,8 +318,10 @@ public class AddProductController implements Initializable {
     }
 
     /**
-     * Deletes the selected part from the Associated Parts Table.
-     * Confirmation is required to make sure it wasn't an accident.
+     * Deletes the selected part from the Associated Parts Table
+     * Confirmation is required to make sure it wasn't an accident
+     *
+     * @param event the event to be executed when the Remove button is clicked on the Add Product Screen
      */
     @FXML
     void onActionRemovePart(ActionEvent event) {
@@ -322,9 +338,11 @@ public class AddProductController implements Initializable {
     }
 
     /**
-     * Adds a new product to the inventory then program goes back to Main Screen.
-     * Error messages are displayed for incorrect inputs.
-     * The fields are validated to prevent empty and/or invalid values.
+     * Adds a new product to the inventory then program goes back to Main Screen
+     * Error messages are displayed for incorrect inputs
+     * The fields are validated to prevent empty and/or invalid values
+     *
+     * @param event the event to be executed when the Save button is clicked on the Add Product Screen
      */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {

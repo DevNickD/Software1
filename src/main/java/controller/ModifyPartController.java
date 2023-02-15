@@ -94,7 +94,9 @@ public class ModifyPartController implements Initializable {
     Parent scene;
 
     /**
-     * Displays different alert messages based on specific cases.
+     * Displays different alert messages based on specific cases
+     *
+     * @param alertType the variable for which case gets executed and has it's error message displayed
      */
     private void showAlert(int alertType) {
 
@@ -135,6 +137,41 @@ public class ModifyPartController implements Initializable {
     }
 
     /**
+     * Validates that inventory level is equal to or between minimum and maximum inventory level
+     *
+     * @return isValid/true if inventory level is between the minimum and maximum inventory level
+     */
+    private boolean inventoryValidate(int min, int max, int stock) {
+
+        boolean isValid = true;
+
+        if (stock < min || stock > max) {
+            isValid = false;
+            showAlert(3);
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Validates that min is a number greater than 0 and less than max.
+     *
+     * @return isValid/true if minimum inventory level is greater than 0 and less than max
+     */
+    private boolean minValidate(int min, int max) {
+
+        boolean isValid = true;
+
+        if (min <= 0 || min >= max) {
+            isValid = false;
+            showAlert(4);
+        }
+
+        return isValid;
+    }
+
+
+    /**
      * Sets swappable label to "Machine ID".
      *
      * Label wouldn't change and couldn't figure out why for some time. Then I realized
@@ -144,6 +181,8 @@ public class ModifyPartController implements Initializable {
      * added it after I gave the label in AddPart.fxml an fx:id.
      * Perhaps if I gave the label a different id name, such as modlabelswap instead of
      * labelswap, I would have noticed my mistake sooner.
+     *
+     * @param event the event to be executed when the inHouse radio button is selected
      */
     @FXML
     public void modInHouseSelected(ActionEvent event) {
@@ -157,6 +196,8 @@ public class ModifyPartController implements Initializable {
      *
      * Label wouldn't change and I couldn't figure out why for some time. Then I realized
      * I never saved the action event modOutsourcedSelected in the ModifyPart.fxml file.
+     *
+     * @param event the event to be executed when the Outsourced radio button is selected
      */
     @FXML
     public void modOutsourcedSelected(ActionEvent event){
@@ -167,6 +208,8 @@ public class ModifyPartController implements Initializable {
 
     /**
      * Displays confirmation screen to make sure user wants to cancel changes and go back to main screen.
+     *
+     * @param event the event to be executed when the cancel button is clicked on Modify Part Screen
      */
     @FXML
     void onActionCancelModifyForm(ActionEvent event) throws IOException {
@@ -183,6 +226,8 @@ public class ModifyPartController implements Initializable {
      * Modifies part in inventory based on changes made then program returns to the Main Screen.
      * Error messages are displayed for incorrect inputs.
      * The fields are validated to prevent empty and/or invalid values.
+     *
+     * @param event the event that executes when the save button is clicked on the Modify Part Screen
      */
     @FXML
     void onActionSaveModifyForm(ActionEvent event) throws IOException {
@@ -251,35 +296,6 @@ public class ModifyPartController implements Initializable {
         }
     }
 
-    /**
-     * Validates that inventory level is equal to or between minimum and maximum inventory level.
-     */
-    private boolean inventoryValidate(int min, int max, int stock) {
-
-        boolean isValid = true;
-
-        if (stock < min || stock > max) {
-            isValid = false;
-            showAlert(3);
-        }
-
-        return isValid;
-    }
-
-    /**
-     * Validates that min is a number greater than 0 and less than max.
-     */
-    private boolean minValidate(int min, int max) {
-
-        boolean isValid = true;
-
-        if (min <= 0 || min >= max) {
-            isValid = false;
-            showAlert(4);
-        }
-
-        return isValid;
-    }
 
     /**
      * Initializes controller after user is taken to Modify Part Screen.

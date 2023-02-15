@@ -22,91 +22,91 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Controller class that adds functionality to the Main Screen.
+ * Controller class that adds functionality to the Main Screen
  *
  * @author Nicholas Donnarumma
  */
 public class MainScreenController implements Initializable {
 
     /**
-     * Table View for the Parts table in the Main Screen.
+     * Table View for the Parts table in the Main Screen
      */
     @FXML
     private TableView<Part> partsTableView;
 
     /**
-     * The ID column for the Main Screen's Parts Table.
+     * The ID column for the Main Screen's Parts Table
      */
     @FXML
     private TableColumn<Part, Integer> mainpartidCol;
 
     /**
-     * The Inventory Level column for the Main Screen's Parts Table.
+     * The Inventory Level column for the Main Screen's Parts Table
      */
     @FXML
     private TableColumn<Part, Integer> mainpartinvCol;
 
     /**
-     * The Name column for the Main Screen's Parts Table.
+     * The Name column for the Main Screen's Parts Table
      */
     @FXML
     private TableColumn<Part, String> mainpartnameCol;
 
     /**
-     * The Price column for the Main Screen's Parts Table.
+     * The Price column for the Main Screen's Parts Table
      */
     @FXML
     private TableColumn<Part, Double> mainpartpriceCol;
 
     /**
-     * The text field for the parts search functionality.
+     * The text field for the parts search functionality
      */
     @FXML
     private TextField mainpartsSearch;
 
     /**
-     * Table View for the Products table in the Main Screen.
+     * Table View for the Products table in the Main Screen
      */
     @FXML
     private TableView<Product> productsTableView;
 
     /**
-     * The ID column for the Main Screen's Products Table.
+     * The ID column for the Main Screen's Products Table
      */
     @FXML
     private TableColumn<Product, Integer> mainprodidCol;
 
     /**
-     * The Inventory Level column for the Main Screen's Products Table.
+     * The Inventory Level column for the Main Screen's Products Table
      */
     @FXML
     private TableColumn<Product, Integer> mainprodinvCol;
 
     /**
-     * The Name column for the Main Screen's Products Table.
+     * The Name column for the Main Screen's Products Table
      */
     @FXML
     private TableColumn<Product, String> mainprodnameCol;
 
     /**
-     * The Price column for the Main Screen's Products Table.
+     * The Price column for the Main Screen's Products Table
      */
     @FXML
     private TableColumn<Product, Double> mainprodpriceCol;
 
     /**
-     * The text field for the products search functionality.
+     * The text field for the products search functionality
      */
     @FXML
     private TextField mainproductsSearch;
 
     /**
-     * The part object that is selected.
+     * The part object that is selected
      */
     private static Part part;
 
     /**
-     * The product object that is selected.
+     * The product object that is selected
      */
     private static Product product;
 
@@ -116,21 +116,22 @@ public class MainScreenController implements Initializable {
     Parent scene;
 
     /**
-     * Returns the part object that is selected in the Parts Table.
+     * @return the part object that is selected in the Parts Table
      */
     public static Part getPart() {
         return part;
     }
 
     /**
-     * Gets the product object that is selected in the Products Table.
+     * @return the product object that is selected in the Products Table
      */
     public static Product getProduct() {
         return product;
     }
 
     /**
-     * Displays different alert messages based on specific cases.
+     * Displays different alert messages based on specific cases
+     * @param alertType the variable for which case gets executed and has it's error message displayed
      */
     private void showAlert(int alertType) {
 
@@ -169,7 +170,8 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Method for confirming if user really wants to delete or cancel.
+     * Method for confirming if user really wants to delete or cancel
+     * @return true if OK button is clicked (action is confirmed) or false if cancel is chosen
      */
     public static boolean confirmAction(String title, String content){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -186,7 +188,8 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Takes the user to the Add Part Screen.
+     * Takes the user to the Add Part Screen
+     * @param event the event to be executed when the Add button is clicked below Parts Table
      */
     @FXML
     void onActionAddPart(ActionEvent event) throws IOException {
@@ -200,7 +203,8 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Takes the user to the Add Product Screen.
+     * Takes the user to the Add Product Screen
+     * @param event the event to be executed when the Add button is clicked below Products Table
      */
     @FXML
     void onActionAddProduct(ActionEvent event) throws IOException {
@@ -213,8 +217,10 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Deletes the selected part from the Parts Table.
-     * Confirmation is required to make sure it wasn't an accident.
+     * Deletes the selected part from the Parts Table
+     * Confirmation is required to make sure it wasn't an accident
+     *
+     * @param event the event to be executed when the Delete button is clicked below the Parts Table
      */
     @FXML
     void onActionDeletePart(ActionEvent event) {
@@ -231,9 +237,11 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Deletes the selected product from the Products Table.
-     * Confirmation is required to make sure it wasn't an accident.
-     * Product with associated parts cannot be deleted.
+     * Deletes the selected product from the Products Table
+     * Confirmation is required to make sure it wasn't an accident
+     * Product with associated parts cannot be deleted
+     *
+     * @param event the event to be executed when the Delete button is clicked below the Products Table
      */
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
@@ -254,7 +262,9 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Exits the program when Exit button is clicked.
+     * Exits the program when Exit button is clicked
+     *
+     * @param event the event to be executed when the Exit button is clicked
      */
     @FXML
     void onActionExitProgram(ActionEvent event) {
@@ -264,8 +274,10 @@ public class MainScreenController implements Initializable {
         }
     }
     /**
-     * Takes user to Modify Part Screen.
-     * Error message if no part was selected.
+     * Takes user to Modify Part Screen
+     * Error message if no part was selected
+     *
+     * @param event the event to be executed when the Modify button is clicked below the Parts Table
      */
     @FXML
     void onActionModifyPart(ActionEvent event) throws IOException {
@@ -282,8 +294,10 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Takes user to Modify Product Screen.
-     * Error message if no product was selected.
+     * Takes user to Modify Product Screen
+     * Error message if no product was selected
+     *
+     * @param event the event to be executed when the Modify button is clicked below the Products Table
      */
     @FXML
     void onActionModifyProduct(ActionEvent event) throws IOException {
@@ -300,11 +314,13 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * A search is executed to find parts with an id or name that matches the user's input.
-     * Name can be partial and it isn't case sensitive.
-     * Enter must be pressed for search to be executed.
-     * After parts are found, table will show only those matching parts.
-     * If no matching parts are found, an error message will be displayed.
+     * A search is executed to find parts with an id or name that matches the user's input
+     * Name can be partial and it isn't case sensitive
+     * Enter must be pressed for search to be executed
+     * After parts are found, table will show only those matching parts
+     * If no matching parts are found, an error message will be displayed
+     *
+     * @param event the event to be executed when the Part Table's Search Field is filled and entered
      */
     @FXML
     void searchPart(ActionEvent event) {
@@ -327,8 +343,9 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * When parts search text field is cleared by user, the table is
-     * repopulated with all parts. User doesn't need to press enter.
+     * When parts search text field is cleared by user, the table is repopulated with all parts. User doesn't need to press enter
+     *
+     * @param event the event to be executed after a Part search was executed and the user clears the text in search field
      */
     @FXML
     void partSearchCleared(KeyEvent event) {
@@ -338,11 +355,13 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * A search is executed to find products with an id or name that matches the user's input.
-     * Name can be partial and it isn't case sensitive.
-     * Enter must be pressed for search to be executed.
-     * After products are found, table will show only those matching products.
-     * If no matching products are found, an error message will be displayed.
+     * A search is executed to find products with an id or name that matches the user's input
+     * Name can be partial and it isn't case sensitive
+     * Enter must be pressed for search to be executed
+     * After products are found, table will show only those matching products
+     * If no matching products are found, an error message will be displayed
+     *
+     * @param event the event to be executed when the Product Table's Search Field is filled and entered
      */
     @FXML
     void searchProduct(ActionEvent event) {
@@ -365,8 +384,9 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * When products search text field is cleared by user, the table is
-     * repopulated with all products. User doesn't need to press enter.
+     * When products search text field is cleared by user, the table is repopulated with all products. User doesn't need to press enter
+     *
+     * @param event the event to be executed after a Product search was executed and the user clears the text in search field
      */
     @FXML
     void productSearchCleared(KeyEvent event) {
@@ -377,8 +397,9 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Initializes Main Screen Controller after program is started.
-     * The Product and Part tables are populated with values.
+     * Initializes Main Screen Controller after program is started
+     * The Product and Part tables are populated with values
+     *
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

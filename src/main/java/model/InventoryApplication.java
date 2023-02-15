@@ -7,14 +7,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 /**
- * This class is or the Main Application.
- * It contains methods to load Main Screen and launch with sample data.
+ * This class is for loading the Application
+ * It contains methods to load Main Screen and launch with sample data
  *
  * @author Nicholas Donnarumma
  */
 public class InventoryApplication extends Application {
     /**
-     * This start method is used to load the fxml for the Main screen.
+     * This start method is used to load the fxml for the Main screen
      *
      * The application is useful but could use some future enhancements to extend functionality
      * One enhancement would be to add a button to the main screen product table that will
@@ -56,7 +56,7 @@ public class InventoryApplication extends Application {
         stage.show();
     }
     /**
-     * This main method is used to launch the application and fill the tables with sample data.
+     * This main method is used to launch the application and fill the tables with sample data
      */
     public static void main(String[] args) {
 

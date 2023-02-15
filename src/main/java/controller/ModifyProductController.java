@@ -21,116 +21,116 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller class that adds functionality to the Modify Product Screen.
+ * Controller class that adds functionality to the Modify Product Screen
  *
  * @author Nicholas Donnarumma
  */
 public class ModifyProductController implements Initializable {
 
     /**
-     * The text field for the parts search functionality.
+     * The text field for the parts search functionality
      */
     @FXML
     private TextField modproductSearch;
 
     /**
-     * Table View for the Products table in the Modify Product Screen.
+     * Table View for the Products table in the Modify Product Screen
      */
     @FXML
     private TableView<Part> modprodaddTableView;
 
     /**
-     * The Inventory Level column for the Modify Product Screen's Products Table.
+     * The Inventory Level column for the Modify Product Screen's Products Table
      */
     @FXML
     private TableColumn<Part, Integer> modprodaddinvCol;
 
     /**
-     * The ID column for the Add Product Screen's Products Table.
+     * The ID column for the Add Product Screen's Products Table
      */
     @FXML
     private TableColumn<Part, Integer> modprodaddpartidCol;
 
     /**
-     * The Name column for the Add Product Screen's Products Table.
+     * The Name column for the Add Product Screen's Products Table
      */
     @FXML
     private TableColumn<Part, String> modprodaddpartnameCol;
 
     /**
-     * The Price column for the Add Product Screen's Products Table.
+     * The Price column for the Add Product Screen's Products Table
      */
     @FXML
     private TableColumn<Part, Double> modprodaddpriceCol;
 
     /**
-     * The product ID text field for user input.
+     * The product ID text field for user input
      */
     @FXML
     private TextField modprodidTxt;
 
     /**
-     * The product Inventory Level text field for user input.
+     * The product Inventory Level text field for user input
      */
     @FXML
     private TextField modprodinvTxt;
 
     /**
-     * The product Max text field for user input.
+     * The product Max text field for user input
      */
     @FXML
     private TextField modprodmaxTxt;
 
     /**
-     * The product Min text field for user input.
+     * The product Min text field for user input
      */
     @FXML
     private TextField modprodminTxt;
 
     /**
-     * The product Name text field for user input.
+     * The product Name text field for user input
      */
     @FXML
     private TextField modprodnameTxt;
 
     /**
-     * The product Price text field for user input.
+     * The product Price text field for user input
      */
     @FXML
     private TextField modprodpriceTxt;
 
     /**
-     * Table View for the Associated Parts table in the Modify Product Screen.
+     * Table View for the Associated Parts table in the Modify Product Screen
      */
     @FXML
     private TableView<Part> modprodremoveTableView;
 
     /**
-     * The Inventory Level column for the Modify Product Screen's Associated Parts Table.
+     * The Inventory Level column for the Modify Product Screen's Associated Parts Table
      */
     @FXML
     private TableColumn<Part, Integer> modprodremoveinvCol;
 
     /**
-     * The ID column for the Modify Product Screen's Associated Parts Table.
+     * The ID column for the Modify Product Screen's Associated Parts Table
      */
     @FXML
     private TableColumn<Part, Integer> modprodremovepartidCol;
 
     /**
-     * The Name column for the Modify Product Screen's Associated Parts Table.
+     * The Name column for the Modify Product Screen's Associated Parts Table
      */
     @FXML
     private TableColumn<Part, String> modprodremovepartnameCol;
 
     /**
-     * The Price column for the Modify Product Screen's Associated Parts Table.
+     * The Price column for the Modify Product Screen's Associated Parts Table
      */
     @FXML
     private TableColumn<Part, Double> modprodremovepriceCol;
 
     /**
-     * The product object selected in the MainScreenController.
+     * The product object selected in the MainScreenController
      */
     private Product productSelected;
 
@@ -138,13 +138,15 @@ public class ModifyProductController implements Initializable {
     Parent scene;
 
     /**
-     * Displays different alert messages based on specific cases.
+     * Displays different alert messages based on specific cases
      *
-     * Had an error one time because I forgot the break statement in case 4.
+     * Had an error one time because I forgot the break statement in case 4
      *
      * The different errors were helpful with debugging when some methods didn't work and I
      * received an error message from a branch that wasn't supposed to happen. It showed that
      * the correct branch path wasn't taken.
+     *
+     * @param alertType the variable for which case gets executed and has it's error message displayed
      */
     private void showAlert(int alertType) {
 
@@ -195,7 +197,9 @@ public class ModifyProductController implements Initializable {
     }
 
     /**
-     * Validates that inventory level is equal to or between minimum and maximum inventory level.
+     * Validates that inventory level is equal to or between minimum and maximum inventory level
+     *
+     * @return isValid/true if inventory level is between the minimum and maximum inventory level
      */
     private boolean inventoryValidate(int min, int max, int stock) {
 
@@ -210,7 +214,9 @@ public class ModifyProductController implements Initializable {
     }
 
     /**
-     * Validates that min is a number greater than 0 and less than max.
+     * Validates that min is a number greater than 0 and less than max
+     *
+     * @return isValid/true if minimum inventory level is greater than 0 and less than max
      */
     private boolean minValidate(int min, int max) {
 
@@ -226,11 +232,13 @@ public class ModifyProductController implements Initializable {
 
 
     /**
-     * A search is executed to find parts with an id or name that matches the user's input.
-     * Name can be partial and it isn't case sensitive.
-     * Enter must be pressed for search to be executed.
-     * After parts are found, table will show only those matching parts.
-     * If no matching parts are found, an error message will be displayed.
+     * A search is executed to find parts with an id or name that matches the user's input
+     * Name can be partial and it isn't case sensitive
+     * Enter must be pressed for search to be executed
+     * After parts are found, table will show only those matching parts
+     * If no matching parts are found, an error message will be displayed
+     *
+     * @param event the event to be executed when the Part Table's Search Field is filled and entered
      */
     @FXML
     void searchPart(ActionEvent event) {
@@ -253,8 +261,9 @@ public class ModifyProductController implements Initializable {
     }
 
     /**
-     * When parts search text field is cleared by user, the table is
-     * repopulated with all parts. User doesn't need to press enter.
+     * When parts search text field is cleared by user, the table is repopulated with all parts. User doesn't need to press enter
+     *
+     * @param event the event to be executed after a Part search was executed and the user clears the text in search field
      */
     @FXML
     void partSearchCleared(KeyEvent event) {
@@ -265,10 +274,10 @@ public class ModifyProductController implements Initializable {
 
 
     /**
-     * Copies selected part object, from Add Product top table, and adds
-     * it to the bottom associated parts table.
+     * Copies selected part object, from Add Product top table, and adds it to the bottom associated parts table
+     * Displays error message if no part is selected
      *
-     * Displays error message if no part is selected.
+     * @param event the event to be executed when the Add button is clicked on the Modify Product Screen
      */
     @FXML
     void onActionAddPart(ActionEvent event) {
@@ -282,7 +291,9 @@ public class ModifyProductController implements Initializable {
     }
 
     /**
-     * Displays confirmation alert to make sure user wants to cancel and go back to Main Screen.
+     * Displays confirmation alert to make sure user wants to cancel and go back to Main Screen
+     *
+     * @param event the event to be executed when the Cancel button is clicked on the Modify Product Screen
      */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
@@ -295,8 +306,10 @@ public class ModifyProductController implements Initializable {
     }
 
     /**
-     * Deletes the selected part from the Associated Parts Table.
-     * Confirmation is required to make sure it wasn't an accident.
+     * Deletes the selected part from the Associated Parts Table
+     * Confirmation is required to make sure it wasn't an accident
+     *
+     * @param event the event to be executed when the Remove button is clicked on the Modify Product Screen
      */
     @FXML
     void onActionRemovePart(ActionEvent event) {
@@ -314,9 +327,11 @@ public class ModifyProductController implements Initializable {
     }
 
     /**
-     * Adds a new product to the inventory then program goes back to Main Screen.
-     * Error messages are displayed for incorrect inputs.
-     * The fields are validated to prevent empty and/or invalid values.
+     * Adds a new product to the inventory then program goes back to Main Screen
+     * Error messages are displayed for incorrect inputs
+     * The fields are validated to prevent empty and/or invalid values
+     *
+     * @param event the event to be executed when the Save button is clicked on the Modify Product Screen
      */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
